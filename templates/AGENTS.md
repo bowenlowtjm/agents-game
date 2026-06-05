@@ -13,9 +13,9 @@ Orchestrator drives a Think→Plan→Build→Review→Test→Ship→Reflect loop
 ## Conventions (enforce)
 - All game code+assets under `Assets/_Game/`. One asmdef: `Pully.Game`.
 - Ruleset is **data-driven** via `RulesetDefinition` ScriptableObject — never hardcode the mapping.
-- Tests under `Assets/Tests/` (EditMode + PlayMode). Seeded RNG; deterministic sessions.
-- Build only via `Editor/Builder.cs` batchmode. APK → `Builds/Android/pully.apk`.
-- Every significant change: append `docs/run-log.md`, post to Discord per rung, link the `SAA-###` issue.
+- Tests under `Assets/Tests/` (EditMode unit + PlayMode integration). Add tests with each feature; seeded RNG → deterministic sessions. A passing sample of each ships in the scaffold.
+- CI: `ci.yml` runs tests on every PR — **merge only when green**. `build.yml` produces the Android APK artifact on `main` (GameCI builder). `Editor/Builder.cs` is for *local* batchmode only (→ `Builds/Android/pully.apk`); don't use it as GameCI `buildMethod`.
+- Every significant change (incl. CI status): append `docs/run-log.md`, post to Discord per rung, link the `SAA-###` issue.
 
 ## Memory
 - **Solo config:** `docs/decisions.md` (ADR-lite), `docs/CONVENTIONS.md`, `docs/GOTCHAS.md`, `docs/run-log.md`.

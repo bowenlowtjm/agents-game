@@ -69,5 +69,6 @@ pully/
 - [ ] Linear MCP connected; PM agent can create/transition an `SAA-###` issue
 - [ ] Discord set up: **webhook** (post-only feed, L3/L4) + **bot/MCP** (two-way, L1); agent posts a test "significant change"
 - [ ] `Builder.cs` batchmode → debug APK *by hand* once (baseline path)
+- [ ] GitHub repo + `UNITY_*` secrets; `ci.yml` green on sample tests; `build.yml` yields an APK artifact (see [Testing & CI/CD](10-Testing-and-CICD.md))
 - [ ] Memory ready: flat `docs/` (solo) **/** OpenViking server up + seeded (team)
 - [ ] Hermes launches one worker that calls one Unity MCP tool end-to-end

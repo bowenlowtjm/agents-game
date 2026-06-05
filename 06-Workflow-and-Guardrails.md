@@ -6,7 +6,7 @@ How a run actually executes, and what keeps an unattended run safe and honest.
 1. **Plan** — orchestrator reads brief + `GOTCHAS.md`, emits a task list.
 2. **Implement** — worker edits code / drives Unity MCP on a branch.
 3. **Verify** — Test/Verify worker compiles, runs tests, checks console clean, attempts build.
-4. **Gate** — orchestrator merges only on green; else loops back with the failure.
+4. **Gate** — open a PR; orchestrator merges only when **`ci.yml` is green** (EditMode+PlayMode via GameCI); else loops back with the failure. See [Testing & CI/CD](10-Testing-and-CICD.md).
 5. **Record** — append to `run-log.md`; promote any new trap to `GOTCHAS.md`.
 6. **Broadcast** — if the change is *significant* (milestone, issue→Done, build produced, decision logged, escalation), post to Discord (see [Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)): post-only webhook at L3/L4, two-way channel at L1.
 

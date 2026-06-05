@@ -8,7 +8,9 @@ A run is acceptable only when **all gates pass** and the quality bars are met. V
 - [ ] Ruleset is **data-driven** (mapping from the `RulesetDefinition` SO, not hardcoded).
 - [ ] Three screens exist and navigate: menu → game → game-over → menu.
 - [ ] **Android APK builds, installs, and launches** on device/emulator (via `Editor/Builder.cs` batchmode).
-- [ ] **Tests present & green:** EditMode (scoring/combo) + at least one PlayMode (gesture→score).
+- [ ] **Tests present & green:** EditMode (scoring/combo, gesture classification, ruleset, determinism) + PlayMode integration (input→score, lives/timer, replay).
+- [ ] **CI green:** `ci.yml` passes on the PR (EditMode + PlayMode via GameCI).
+- [ ] **Build artifact:** `build.yml` produced an Android APK artifact on `main`.
 - [ ] **Game Art** pass done: generated 2D sprites + packed atlas, palette consistent with `DESIGN.md`.
 - [ ] `docs/run-log.md` final entry written; Linear `SAA` board matches reality (no fake Done).
 - [ ] Self-report lists what's built, what's stubbed, known issues — **honestly**.
@@ -31,6 +33,7 @@ Measured by bot player + Unity Recorder + LLM judge (+ human anchor at L1):
 | Playable | PlayMode pass / short capture |
 | APK | file path + install log |
 | Tests | test-runner result (counts + pass) |
+| CI | green `ci.yml` run URL; APK uploaded by `build.yml` |
 | Art | atlas file + before/after sprites |
 | Gameplay quality | bot logs + judge rubric output |
 

@@ -24,15 +24,16 @@ REPO_LOCATION: <path or git remote for the NEW repo>
 
 ## Step 1 — Set up the rails
 - Connect Unity MCP, Linear MCP, and Discord (webhook or bot per `RUNG`).
+- Push the scaffold to GitHub; add Unity license secrets (`UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`); **confirm `ci.yml` runs green** on the scaffold's sample tests (proves the test+CI loop before any feature work). See [Testing & CI/CD](10-Testing-and-CICD.md).
 - **Game PM** (team config) reads `spec/GAME-SPEC.md` → creates the `SAA` epic + issues for this run.
 - Memory: use `MEMORY` backend; seed `DESIGN.md` with `ART_STYLE` (or mark AGENT-DECIDES at L4).
 
-## Step 2 — Build to the milestones
-Follow the milestone order (mirrors [../08-Roadmap](08-Roadmap.md)):
-- **M1** core loop (input → gesture recognition → ruleset → scoring/combo), procedural placeholder targets, seeded RNG, tests green.
-- **M2** menus + HUD + high score + **Game Art** sprites/atlas + juice + **APK that installs**.
-- **M3** balance, robustness, stand up gameplay-quality harness (bot player + recorder + judge).
-Each significant change → Discord (post-only L3/L4, two-way L1) + append `docs/run-log.md`.
+## Step 2 — Build to the milestones (test-driven, PR-gated)
+Work feature-branch → PR → `ci.yml` green → merge. Add EditMode unit tests + PlayMode integration tests alongside each feature ([Testing & CI/CD](10-Testing-and-CICD.md)). Follow the milestone order (mirrors [../08-Roadmap](08-Roadmap.md)):
+- **M1** core loop (input → gesture recognition → ruleset → scoring/combo), procedural placeholder targets, seeded RNG; **unit tests** for scoring/combo/gesture/determinism, one **PlayMode** input→score test.
+- **M2** menus + HUD + high score + **Game Art** sprites/atlas + juice; **APK that installs** (via `build.yml` artifact); integration tests for lives/timer/game-over.
+- **M3** balance, robustness, gameplay-quality harness (bot player + recorder + judge); determinism replay test.
+Each significant change (incl. **CI green/red**) → Discord (post-only L3/L4, two-way L1) + append `docs/run-log.md`.
 
 ## Step 3 — Acceptance & record
 - Verify against `spec/ACCEPTANCE.md` (every gate + quality bars).

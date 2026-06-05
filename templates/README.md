@@ -8,7 +8,12 @@ These files are copied **verbatim into the new run repo** at Step 0 of [../RUN-P
 | `DESIGN.md` | art taste memory | palette + style (Game Art / run param) |
 | `Editor/Builder.cs` | batchmode Android build (agent-callable) | none — ready |
 | `Assets/_Game/Scripts/RulesetDefinition.cs` | data-driven ruleset SO | create an asset, populate from `spec/RULESET.md` |
+| `Assets/_Game/Scripts/ScoreCalculator.cs` | pure scoring logic (unit-testable) | extend as the loop grows |
 | `Assets/_Game/Scripts/Pully.Game.asmdef` | game assembly | none — ready |
+| `Assets/Tests/EditMode/*` | unit tests + asmdef (1 passing sample) | add gesture/ruleset/determinism tests |
+| `Assets/Tests/PlayMode/*` | integration tests + asmdef (1 passing sample) | add input→score / lives / replay tests |
+| `.github/workflows/ci.yml` | run EditMode+PlayMode on PR (GameCI) | add `UNITY_*` secrets in repo |
+| `.github/workflows/build.yml` | Android APK artifact on `main` (GameCI) | add `UNITY_*` secrets in repo |
 | `docs/decisions.md` · `CONVENTIONS.md` · `GOTCHAS.md` · `run-log.md` | project memory | append during the run |
 | `.gitignore` | Unity ignores | none — ready |
 

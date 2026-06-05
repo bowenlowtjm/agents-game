@@ -9,16 +9,17 @@ Goal: prove the plumbing before testing autonomy.
 - Unity MCP + **Linear MCP** connected to Hermes; smoke-test scene create + console read + create an `SAA-###` issue.
 - **Discord** wired: webhook (post-only feed for L3/L4) + bot/MCP (two-way channel for L1); agent posts a test significant-change.
 - `Builder.cs` batchmode → debug APK *by hand* once (baseline path exists).
+- **CI live:** push scaffold to GitHub, add `UNITY_*` secrets, confirm `ci.yml` green on the sample tests and `build.yml` produces an APK artifact ([Testing & CI/CD](10-Testing-and-CICD.md)).
 - Memory ready: flat `docs/` (solo) or OpenViking server (team), seeded; `DESIGN.md` started.
-- **Exit:** an agent reads the Unity console, creates a scene, and files a Linear issue through the harness.
+- **Exit:** an agent reads the Unity console, creates a scene, files a Linear issue, and **opens a green PR through CI**.
 
 ## M1 — Core loop, agent-built (first ladder run)
 - **Game PM** breaks the brief into the `SAA` backlog in Linear.
 - Input System wired; gesture recognizer (single/double/long/swipe/two-finger).
 - Ruleset ScriptableObject + scoring + combo.
 - One game scene, targets spawn (procedural shapes/colors placeholders), seeded RNG.
-- EditMode tests for scoring/combo; PlayMode test for one gesture→score.
-- **Exit:** core loop playable in Editor; tests green; issues moved through `SAA` board.
+- EditMode unit tests (scoring/combo, gesture classification, ruleset, determinism); PlayMode integration test (input→score).
+- **Exit:** core loop playable in Editor; `ci.yml` green on the PR; issues moved through `SAA` board.
 
 ## M2 — Playable build + art pass
 - Main menu + game-over screens; HUD (score/combo/timer).

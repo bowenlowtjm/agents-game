@@ -6,6 +6,7 @@ Same scorecard every run. Four buckets: **did it ship**, **code quality**, **gam
 - [ ] Opens with no compile errors
 - [ ] Core loop playable in Editor
 - [ ] APK installs + launches
+- [ ] **CI green** (`ci.yml` tests pass) + APK artifact from `build.yml`
 - [ ] Self-report produced
 - [ ] Linear `SAA` board reflects real state (no fake "Done")
 
