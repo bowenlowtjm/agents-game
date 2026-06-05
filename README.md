@@ -45,6 +45,7 @@ An experiment: **how much of a shippable mobile game can an agent team produce, 
 | [Roadmap](08-Roadmap.md) | Milestones M0–M4 |
 | [Tool-Stack Options](09-Tool-Stack-Options.md) | Art gen, audio, build CI, device test, judge tooling |
 | [Testing & CI/CD](10-Testing-and-CICD.md) | Test pyramid + GitHub Actions (GameCI) pipeline |
+| [Parallel Runs](11-Parallel-Runs.md) | Running many runs at once + Discord channel routing |
 
 ## Start here
 [Charter](01-Experiment-Charter.md) → [Game Brief](02-Game-Design-Brief.md) → set up per [Toolchain](03-Toolchain-and-Setup.md) → run [Autonomy Ladder](05-Autonomy-Ladder.md) (L1 → L3 → L4).

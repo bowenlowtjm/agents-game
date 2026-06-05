@@ -11,10 +11,14 @@ RUNG:          L1 (reviewer) | L3 (spec-only) | L4 (autonomous)
 MODELS:        orchestrator=KimiK2.5  workers=KimiK2.5     # Phase 1 = Kimi-only; swap Codex in Phase 2
 MEMORY:        flat-docs (default for A)  |  OpenViking (default for B)
 LINEAR_TEAM:   SAA
-DISCORD:       webhook-url=<…>  (L3/L4)   |   bot/channel=<…> (L1)
+LINEAR_LABEL:  run:<RUN_ID>                            # so parallel runs don't blur the board
+DISCORD_TARGET: <webhook-url (L3/L4) | channel-id for the bot (L1)>   # per run — see Parallel Runs
 ART_STYLE:     <flat-vector | pixel | …>   # L1/L3: human sets here. L4: leave "AGENT-DECIDES"
 REPO_LOCATION: <path or git remote for the NEW repo>
+UNITY_MCP_PORT: <unique per concurrent run>           # e.g. 6401, 6402 — only matters when running in parallel
+VIKING_NAMESPACE: viking://runs/<RUN_ID>/             # Config B team memory; omit for solo/flat-docs
 ```
+> Running several at once? See [Parallel Runs & Discord Routing](11-Parallel-Runs.md) — every shared resource (Editor port, memory namespace, Linear label, Discord channel) must be unique per run.
 
 ## Step 0 — Create the new repo (never build in the spec repo)
 1. `git init` a new repo at `REPO_LOCATION`, named `RUN_ID`.

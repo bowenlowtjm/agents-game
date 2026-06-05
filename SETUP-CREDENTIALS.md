@@ -28,8 +28,8 @@ The role layer (orchestrator + game-pm + game-art + eng/qa/release) runs as **na
 ## 5. Comms — Discord (🟡)
 | Cred | Var | Where | For |
 |------|-----|-------|-----|
-| 🟡 Webhook URL | `DISCORD_WEBHOOK_URL` | Channel → Integrations → Webhooks | **L3/L4** post-only feed (no app) |
-| 🟡 Bot token | `DISCORD_BOT_TOKEN` | Discord Developer Portal → app → Bot | **L1** two-way channel |
+| 🟡 Webhook URL | `DISCORD_WEBHOOK_URL` | Channel → Integrations → Webhooks | **L3/L4** post-only feed (no app). **One per run** if running in parallel — see [Parallel Runs](11-Parallel-Runs.md) |
+| 🟡 Bot token | `DISCORD_BOT_TOKEN` | Discord Developer Portal → app → Bot | **L1** two-way. One bot can serve many runs, routing by `channel_id` |
 | 🟡 (bot) Message Content intent + invite | — | Dev Portal → Bot → intents; OAuth invite | required for the bot to read replies |
 
 ## 6. Art generation — Game Art agent (🟡, from M2)

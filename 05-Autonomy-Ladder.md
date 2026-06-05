@@ -32,6 +32,7 @@ The human↔agent channel changes shape with autonomy — one-way feed when the 
 
 - **L1** uses Discord as a genuine back-and-forth workspace: the team pings questions, balance/art choices, and merge approvals; your replies unblock it (these count as interventions in [Metrics](07-Metrics-and-Evaluation.md)).
 - **L3/L4** post *significant changes only* (milestone, issue→Done, build produced, decision logged, escalation) so the feed stays signal-dense. No human reply is part of the run; at L4 an escalation that *would* need a human is itself a recorded failure of autonomy.
+- **Running runs in parallel?** Each run gets its own channel/thread and posts are prefixed `[RUN_ID]` — see [Parallel Runs & Discord Routing](11-Parallel-Runs.md).
 
 ## Protocol
 - Same brief, tools, roles, and model config within a ladder pass.
