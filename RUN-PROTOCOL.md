@@ -4,6 +4,7 @@ A "run" = one attempt to build Pully, in its own fresh repo, at a stated autonom
 
 ## Run Parameters (human fills before launch)
 ```
+SPEC_REPO:     <local path to a clone of github.com/bowenlowtjm/agents-game>   # the spec kit
 RUN_ID:        pully-<config>-<rung>-<YYYYMMDD>      # e.g. pully-B-L3-20260604
 CONFIG:        A (solo)  |  B (Hermes role-team)
 RUNG:          L1 (reviewer) | L3 (spec-only) | L4 (autonomous)
@@ -15,9 +16,9 @@ ART_STYLE:     <flat-vector | pixel | …>   # L1/L3: human sets here. L4: leave
 REPO_LOCATION: <path or git remote for the NEW repo>
 ```
 
-## Step 0 — Create the new repo (never build in the spec folder)
+## Step 0 — Create the new repo (never build in the spec repo)
 1. `git init` a new repo at `REPO_LOCATION`, named `RUN_ID`.
-2. Copy everything under `templates/` into the repo root (so `Editor/Builder.cs`, `docs/`, `CLAUDE.md`, `DESIGN.md`, `.gitignore` land in place).
+2. Copy everything under `$SPEC_REPO/templates/` into the new repo root (so `Editor/Builder.cs`, `docs/`, `AGENTS.md`, `DESIGN.md`, `.gitignore` land in place).
 3. Create the Unity **3D** project in that repo (Unity 6 LTS) if not pre-created; add Android Build Support, Input System, 2D Sprite + 2D Atlas packages.
 4. Commit: `chore: scaffold <RUN_ID> from spec kit`.
 

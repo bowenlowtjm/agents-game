@@ -3,7 +3,7 @@
 > **You are an agent (or agent team) building a mobile game called Pully.**
 > This folder is **read-only spec**. Do **NOT** build here. Each run happens in a **brand-new git repo** that you create. See [RUN-PROTOCOL](RUN-PROTOCOL.md).
 
-Spec root (absolute): `/Users/bowenlow/Documents/Shared_Notes/Dev-Hermes-Pully/`
+Spec root: **the root of this repository** (`github.com/bowenlowtjm/agents-game`). All paths below are relative to it.
 
 ## Your job, in one paragraph
 Create a new git repo for this run, scaffold a Unity project from `templates/`, and implement the game defined in `spec/GAME-SPEC.md` to the bar in `spec/ACCEPTANCE.md`. Track work in Linear (team SAA), communicate over Discord per your assigned autonomy rung, and record results in the new repo's `docs/run-log.md`. Build a working Android APK.

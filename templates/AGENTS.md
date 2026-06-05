@@ -1,7 +1,8 @@
 # AGENTS.md — Pully run repo
 
-This repo is **one run** of the Pully experiment. The authoritative spec lives **outside** this repo at:
-`/Users/bowenlow/Documents/Shared_Notes/Dev-Hermes-Pully/` — read `AGENT-BRIEF.md` there first.
+This repo is **one run** of the Pully experiment. The authoritative spec lives **outside** this repo, in the
+Pully spec kit (`github.com/bowenlowtjm/agents-game`, cloned locally at `SPEC_REPO` — see the run parameters).
+Read `$SPEC_REPO/AGENT-BRIEF.md` first.
 
 ## What this project is
 A Unity 6 (3D project, 2D-sprite gameplay) Android arcade game. Build it to `spec/GAME-SPEC.md` + `spec/RULESET.md`, to the bar in `spec/ACCEPTANCE.md`.
