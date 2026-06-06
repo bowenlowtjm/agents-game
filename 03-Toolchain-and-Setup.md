@@ -19,6 +19,15 @@ Agents can't click the Editor; they need a tool bridge.
 
 **Decision:** official Unity MCP for stability; IvanMurzak in reserve for the in-Editor test loop. The agent's ability to *verify its own work in-Editor* is the single biggest lever.
 
+### Headless compile & error check (no window focus)
+Unity pauses compilation until the Editor window regains focus — fatal for an unattended agent, which can write C# and never see the errors. The kit ships an MCP-independent primitive so the agent can **refresh → compile → read errors** without any clicks:
+- `templates/Editor/AutoRefresher.cs` — CLI: `-executeMethod AutoRefresher.RefreshAndExit -logFile Logs/compile.log` (exit 0/1).
+- `templates/Editor/LocalRefreshServer.cs` — live Editor: `curl :PORT/refresh` then `curl :PORT/errors`. Port from `PULLY_REFRESH_PORT` (unique per parallel run).
+- `templates/scripts/unity-check.sh` — one wrapper the agent calls after every C# edit; auto-picks HTTP (live Editor) or CLI batchmode, returns clean/errors.
+- These live in a **`Pully.EditorTools` asmdef with no game reference**, so they still run when the game code is broken — exactly when you need them.
+
+The agent runs `unity-check.sh` after writing code and **before** running tests; clean compile is the precondition for everything downstream.
+
 ## Layer 3 — Harness, roles & models (no Claude Code)
 - **Hermes** — orchestration runtime (spawns agents, routes tools, run lifecycle).
 - **Native Hermes role-agents** — the **role layer**: orchestrator + custom **Game PM** + **Game Art** + Game-Logic/Scene/Build/QA, each a system prompt + tool set defined in the harness, driving a Think→Plan→Build→Review→Test→Ship→Reflect loop. Role definitions live in `roles/`. See [Architecture](04-Agent-Team-Architecture.md).
@@ -66,6 +75,7 @@ pully/
 - [ ] Unity Hub + 6 LTS + Android module; empty 3D project committed
 - [ ] Hermes role-agents defined (`roles/`); `AGENTS.md` manifest in repo; **Game PM** + **Game Art** wired
 - [ ] Unity MCP connected to Hermes; smoke-test "read console" + "create scene"
+- [ ] Headless error check works: `scripts/unity-check.sh` reports a deliberately-broken `.cs` as an error, then CLEAN once fixed — no manual Editor focus
 - [ ] Linear MCP connected; PM agent can create/transition an `SAA-###` issue
 - [ ] Discord set up: **webhook** (post-only feed, L3/L4) + **bot/MCP** (two-way, L1); agent posts a test "significant change"
 - [ ] `Builder.cs` batchmode → debug APK *by hand* once (baseline path)

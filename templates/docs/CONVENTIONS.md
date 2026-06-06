@@ -14,6 +14,10 @@ Read before writing code. Keep edits consistent with these.
 - Seed all RNG from the ruleset `seed`; gameplay must be deterministic per seed.
 - Input via the new Input System; support touch + mouse (Editor).
 
+## Verify loop
+- After each C# edit, run `scripts/unity-check.sh` → must be CLEAN before proceeding (headless; no Editor focus needed). Editor tools live in `Pully.EditorTools` (no game ref) so they run even when game code is broken.
+- `PULLY_REFRESH_PORT` must be unique per parallel run.
+
 ## Build & assets
 - Build only via `Editor/Builder.cs` batchmode; APK → `Builds/Android/pully.apk`.
 - Sprites go through the Game Art atlas; correct import settings (PPU, point filter for pixel art).

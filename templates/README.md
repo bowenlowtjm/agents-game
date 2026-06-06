@@ -7,6 +7,8 @@ These files are copied **verbatim into the new run repo** at Step 0 of [../RUN-P
 | `AGENTS.md` | run-repo routing + conventions + spec pointer | none — ready |
 | `DESIGN.md` | art taste memory | palette + style (Game Art / run param) |
 | `Editor/Builder.cs` | batchmode Android build (agent-callable) | none — ready |
+| `Editor/AutoRefresher.cs` · `LocalRefreshServer.cs` · `Pully.EditorTools.asmdef` | headless compile + error check (no Editor focus) | none — ready |
+| `scripts/unity-check.sh` | wrapper: refresh+compile+read errors after each C# edit | set `PULLY_REFRESH_PORT` or `UNITY_BIN` |
 | `Assets/_Game/Scripts/RulesetDefinition.cs` | data-driven ruleset SO | create an asset, populate from `spec/RULESET.md` |
 | `Assets/_Game/Scripts/ScoreCalculator.cs` | pure scoring logic (unit-testable) | extend as the loop grows |
 | `Assets/_Game/Scripts/Pully.Game.asmdef` | game assembly | none — ready |

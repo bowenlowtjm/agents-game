@@ -16,6 +16,7 @@ DISCORD_TARGET: <webhook-url (L3/L4) | channel-id for the bot (L1)>   # per run 
 ART_STYLE:     <flat-vector | pixel | …>   # L1/L3: human sets here. L4: leave "AGENT-DECIDES"
 REPO_LOCATION: <path or git remote for the NEW repo>
 UNITY_MCP_PORT: <unique per concurrent run>           # e.g. 6401, 6402 — only matters when running in parallel
+PULLY_REFRESH_PORT: <unique per concurrent run>       # e.g. 8090, 8091 — headless compile-check server port
 VIKING_NAMESPACE: viking://runs/<RUN_ID>/             # Config B team memory; omit for solo/flat-docs
 ```
 > Running several at once? See [Parallel Runs & Discord Routing](11-Parallel-Runs.md) — every shared resource (Editor port, memory namespace, Linear label, Discord channel) must be unique per run.
@@ -29,6 +30,7 @@ VIKING_NAMESPACE: viking://runs/<RUN_ID>/             # Config B team memory; om
 ## Step 1 — Set up the rails
 - Connect Unity MCP, Linear MCP, and Discord (webhook or bot per `RUNG`).
 - Push the scaffold to GitHub; add Unity license secrets (`UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`); **confirm `ci.yml` runs green** on the scaffold's sample tests (proves the test+CI loop before any feature work). See [Testing & CI/CD](10-Testing-and-CICD.md).
+- **Verify the headless compile-check loop:** `scripts/unity-check.sh` flags a deliberately-broken `.cs` and returns CLEAN once fixed — no Editor focus. This is the agent's tightest feedback loop ([Toolchain › Headless compile & error check](03-Toolchain-and-Setup.md#headless-compile--error-check-no-window-focus)).
 - **Game PM** (team config) reads `spec/GAME-SPEC.md` → creates the `SAA` epic + issues for this run.
 - Memory: use `MEMORY` backend; seed `DESIGN.md` with `ART_STYLE` (or mark AGENT-DECIDES at L4).
 
