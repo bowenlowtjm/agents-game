@@ -2,6 +2,11 @@
 
 The Game Art agent reads this before generating and updates it as the style locks. Goal: visual consistency across sprites, UI, and FX — and across runs.
 
+## Theme & personality (make it charming, not abstract)
+- **Theme:** <default "Critters" — each shape is a little creature with a reacting face; or set per run>
+- **Personality cues:** targets squash on tap, blink idle, panic-wobble before expiry; combo makes the scene more alive.
+- **Reference games for *feel*** (see `spec/GAME-SPEC.md`): Bop It (action-on-cue), Fruit Ninja (swipe juice), Piano Tiles/Beatstar (tension), Whack-a-Mole (pop feedback).
+
 ## Art style
 - **Style:** <set from run param ART_STYLE — flat-vector | pixel | …>   (L4: agent decides, then record here with a one-line rationale)
 - **Mood:** <e.g. clean, playful, high-contrast arcade>

@@ -14,7 +14,7 @@ Test new agentic tools & concepts on a *real, bounded* deliverable. A mobile gam
 
 ## Scope guardrails (so the game doesn't eat the experiment)
 - **In:** core tap loop, 3–4 target types, scoring, one game scene + menu, local high score, **generated 2D sprites + atlas** (Game Art agent), Android debug build, **measured gameplay quality**.
-- **Out (v1):** monetization, ads, backend/leaderboards online, iOS signing, juice/polish beyond "feels responsive", store submission.
+- **Out (v1):** monetization, ads, backend/leaderboards online, iOS signing, background music, AAA-level polish beyond the feel must-haves in [GAME-SPEC](spec/GAME-SPEC.md#flavor-feel--appeal-build-something-fun-not-just-correct), store submission. *(Core juice/SFX is in scope — appeal is a requirement.)*
 
 ## Definition of done (per run)
 A run is "complete" when an agent (or the team) produces:

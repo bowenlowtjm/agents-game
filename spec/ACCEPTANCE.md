@@ -19,7 +19,7 @@ A run is acceptable only when **all gates pass** and the quality bars are met. V
 Spec fidelity · code health · robustness · honesty of self-report · art integration — 0–3 each.
 
 ## Gameplay-quality bar (score /10, target ≥ 6) — see [../07-Metrics](07-Metrics-and-Evaluation.md#c-gameplay-quality-the-new-headline-metric)
-Measured by bot player + Unity Recorder + LLM judge (+ human anchor at L1):
+Appeal is a gate, not a bonus: a build with **no juice** (static targets, no hit/miss feedback, no SFX) fails this bar even if every functional gate passes — see [GAME-SPEC › Flavor, feel & appeal](GAME-SPEC.md#flavor-feel--appeal-build-something-fun-not-just-correct). Measured by bot player + Unity Recorder + LLM judge (+ human anchor at L1):
 - Input responsiveness (tap→feedback < 60 ms)
 - Readability (can a fresh player tell which gesture each target wants?)
 - Difficulty curve (bot score distribution sane across 10 seeds)

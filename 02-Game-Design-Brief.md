@@ -29,7 +29,7 @@ Rules live in a **ScriptableObject ruleset** so the mapping is data-driven — a
 - Combo multiplier: consecutive correct gestures ×1.1 each, capped ×5.
 - Miss / wrong gesture: lose combo, –1 life (3 lives) **or** time penalty (pick one mode).
 - Round length: 60s timed mode for v1 (deterministic, easy to test).
-- Minimal "juice": scale-pop on hit, color flash on miss, score counter tween.
+- **Juice is required, not optional:** scale-pop + particles + SFX on hit, shake/flash + "oof" on miss, combo escalation, expiry telegraph, big score popups. Theme it ("Critters") so targets have personality. Full flavor + reference games (Bop It, Fruit Ninja, Piano Tiles, Whack-a-Mole) in [spec/GAME-SPEC › Flavor, feel & appeal](spec/GAME-SPEC.md#flavor-feel--appeal-build-something-fun-not-just-correct).
 
 ## Screens
 1. **Main menu** — Play, high score, (settings stub).
