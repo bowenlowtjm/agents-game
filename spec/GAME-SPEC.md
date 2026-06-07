@@ -50,10 +50,27 @@ Pully is a **reaction/dexterity** game — the joy is escalating pressure and th
 
 **Anti-flatness rule:** static targets, no sound, no feedback → caps gameplay quality low **even if every functional gate passes**. Appeal is a requirement, not a bonus.
 
+## Release-quality polish (the real goal: feels like a game a human would keep)
+The **build stays a debug APK** — *no* store signing, keystore, or submission. But the **polish and feel must match a released hyper-casual game** (think the sheen of Fruit Ninja / Piano Tiles, scoped to Pully). Apply the **"uninstall test":** would a real player keep it past a few sessions? Every item below is required:
+
+- **First-run experience** — a short **skippable how-to-play** that teaches the 5 gestures. No dead ends.
+- **Looks finished** — app icon + splash screen, consistent UI, and **zero programmer-art placeholders**. It's a debug build, but it shouldn't *look* like one.
+- **Audio** — a **background music loop** *and* a full SFX set (hit/miss/combo/UI/game-over), with **mute/volume in settings**. (Music is now in scope, not stretch.) Mobile **haptics** on hit/miss.
+- **Juice everywhere** — every interaction has feedback: animated screen transitions, button press states, combo escalation, expiry telegraph, big score popups, a celebratory new-high-score moment.
+- **UX completeness** — main menu, **settings** (sound/haptics, optional colorblind mode), **pause**, game-over with retry, persistent high score, and a reason to come back (score chase / rising difficulty / simple progression).
+- **Performance** — stable **60 fps** on a mid-range Android device, cold start < ~3 s, no GC hitches or input lag.
+- **Stability** — no crashes or softlocks across extended play; handles app backgrounding and rotation/locked-orientation correctly.
+
+This bar is gated in [ACCEPTANCE](ACCEPTANCE.md) and scored in [../07-Metrics](07-Metrics-and-Evaluation.md). The autonomy experiment measures **how much human involvement it takes to reach this polish bar** — not just to compile. Distribution (signing, store submission, monetization) stays out of scope.
+
 ## Screens
-1. **Main menu** — Play, best score, (settings stub).
-2. **Game scene** — HUD (score, combo, lives, timer), spawn field.
-3. **Game over** — score, best, Retry / Menu.
+1. **Splash / boot** — branded splash, fast load into menu.
+2. **First-run how-to-play** — short, skippable, teaches the 5 gestures (shown once; replayable from settings).
+3. **Main menu** — Play, best score, Settings.
+4. **Settings** — music/SFX volume + mute, haptics toggle, optional colorblind mode, replay tutorial.
+5. **Game scene** — HUD (score, combo, lives, timer), spawn field, **pause** button.
+6. **Pause** — resume, restart, settings, quit to menu.
+7. **Game over** — score, best (with celebratory new-high-score moment), Retry / Menu.
 
 ## Art (Game Art agent owns)
 - v1 starts with **procedural placeholders** (solid-color primitive sprites) so logic isn't blocked.
@@ -66,9 +83,9 @@ Pully is a **reaction/dexterity** game — the joy is escalating pressure and th
 - Tests under `Assets/Tests/` (EditMode for scoring/combo, PlayMode for one gesture→score path).
 - Build via `Editor/Builder.cs` batchmode (already in templates).
 
-## Explicitly out of scope (v1)
-Monetization, ads, online leaderboards/backend, iOS signing, store submission. Don't build these.
-- **Audio nuance:** *basic one-shot SFX* (hit / miss / combo / high-score) **are in scope** — they're part of feel and can use free/placeholder sounds (no paid tool needed). Background *music* is optional stretch.
+## Explicitly out of scope
+Distribution stays out: **release signing / keystore, store submission**, monetization, ads, online leaderboards/backend, iOS. The build is a **debug APK** — polished to release *quality* but not *distributed*.
+- **Audio is in scope:** music loop **and** the SFX set (hit/miss/combo/UI/game-over) — part of the release-polish bar. Free/placeholder/generated sounds are fine (no paid tool required).
 
 ## Stretch (only if asked / only as an autonomy stress test)
 True-3D targets (depth/meshes + perspective camera); a new mechanic (e.g. power-up). Not part of v1.

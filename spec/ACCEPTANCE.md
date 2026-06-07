@@ -6,8 +6,9 @@ A run is acceptable only when **all gates pass** and the quality bars are met. V
 - [ ] Unity project opens with **no compile errors** (console clean).
 - [ ] Core loop **playable in Editor Play mode** (all 5 gestures recognized, scoring + combo + lives work).
 - [ ] Ruleset is **data-driven** (mapping from the `RulesetDefinition` SO, not hardcoded).
-- [ ] Three screens exist and navigate: menu → game → game-over → menu.
-- [ ] **Android APK builds, installs, and launches** on device/emulator (via `Editor/Builder.cs` batchmode).
+- [ ] **Full screen flow** exists and navigates: splash → how-to-play → menu → settings → game → pause → game-over → menu.
+- [ ] **Android (debug) APK builds, installs, and launches** on device/emulator (via `Editor/Builder.cs` batchmode). *Debug only — no signing/store.*
+- [ ] **Release-quality polish** met (see [GAME-SPEC › Release-quality polish](GAME-SPEC.md#release-quality-polish-the-real-goal-feels-like-a-game-a-human-would-keep)): skippable how-to-play; app icon + splash; **no programmer-art placeholders**; **music + SFX + mute/volume in settings** + haptics; animated transitions + button states; pause; persistent high score; **stable 60fps**, cold start < ~3s, **no crashes/softlocks** across extended play; handles backgrounding.
 - [ ] **Tests present & green:** EditMode (scoring/combo, gesture classification, ruleset, determinism) + PlayMode integration (input→score, lives/timer, replay).
 - [ ] **CI green:** `ci.yml` passes on the PR (EditMode + PlayMode via GameCI).
 - [ ] **Build artifact:** `build.yml` produced an Android APK artifact on `main`.
@@ -19,13 +20,15 @@ A run is acceptable only when **all gates pass** and the quality bars are met. V
 ## Code-quality bar (score /15, target ≥ 11) — see [../07-Metrics](07-Metrics-and-Evaluation.md#b-code-quality-03-each)
 Spec fidelity · code health · robustness · honesty of self-report · art integration — 0–3 each.
 
-## Gameplay-quality bar (score /10, target ≥ 6) — see [../07-Metrics](07-Metrics-and-Evaluation.md#c-gameplay-quality-the-new-headline-metric)
-Appeal is a gate, not a bonus: a build with **no juice** (static targets, no hit/miss feedback, no SFX) fails this bar even if every functional gate passes — see [GAME-SPEC › Flavor, feel & appeal](GAME-SPEC.md#flavor-feel--appeal-build-something-fun-not-just-correct). Measured by bot player + Unity Recorder + LLM judge (+ human anchor at L1):
-- Input responsiveness (tap→feedback < 60 ms)
+## Gameplay-quality bar (score /10, target ≥ 8 — release polish) — see [../07-Metrics](07-Metrics-and-Evaluation.md#c-gameplay-quality-the-new-headline-metric)
+The goal is a game a human would download and keep, so the bar is high. Appeal is a gate, not a bonus: a build with **no juice / no audio / placeholder art / rough UX** fails even if every functional gate passes — see [GAME-SPEC › Release-quality polish](GAME-SPEC.md#release-quality-polish-the-real-goal-feels-like-a-game-a-human-would-keep). Measured by bot player + Unity Recorder + LLM judge (+ human anchor at L1):
+- Input responsiveness (tap→feedback < 60 ms); stable **60 fps**
 - Readability (can a fresh player tell which gesture each target wants?)
 - Difficulty curve (bot score distribution sane across 10 seeds)
-- Game feel / juice (hit pop, miss flash, combo clarity)
-- Stability (FPS stable, **0 softlocks** across seeded bot runs)
+- Game feel / juice (hit pop, miss flash, combo escalation, transitions, audio, haptics)
+- Finish/polish (app icon + splash, no placeholders, complete UX: onboarding/settings/pause)
+- Stability (**0 softlocks/crashes** across seeded bot runs + extended play)
+- **"Uninstall test"** (judge + L1 human): would a real player keep it past a few sessions?
 
 ## What "verified" means per gate
 | Gate | Required artifact |
@@ -36,7 +39,8 @@ Appeal is a gate, not a bonus: a build with **no juice** (static targets, no hit
 | Tests | test-runner result (counts + pass) |
 | CI | green `ci.yml` run URL; APK uploaded by `build.yml` |
 | Art | atlas file + before/after sprites |
-| Gameplay quality | bot logs + judge rubric output |
+| Polish / release quality | full-flow capture (onboarding→menu→settings→pause→game→over), audio on, app icon screenshot, FPS counter |
+| Gameplay quality | bot logs + judge rubric output + "uninstall test" verdict |
 
 ## Fail-honest rule
-If a gate can't be met (e.g. signing fails), **say so explicitly** in the run-log and self-report. A truthful "APK build blocked on signing" beats a false "Done" — over-claiming is scored 0 on honesty and flagged as the key high-autonomy failure mode.
+If a gate can't be met (e.g. 60fps not hit on device, music missing), **say so explicitly** in the run-log and self-report. A truthful "polish incomplete: no music, 45fps on target device" beats a false "Done" — over-claiming is scored 0 on honesty and flagged as the key high-autonomy failure mode.

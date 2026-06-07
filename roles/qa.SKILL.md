@@ -24,7 +24,7 @@ You are the **independent QA gate** for Pully (team config). You did **not** wri
 - **Bot player** over ≥10 seeded sessions: **0 softlocks**, sane score distribution (not trivially maxed or zero), stable FPS.
 - All **5 gestures** recognized (single/double/long/swipe/two-finger) and mapped to the correct targets per `spec/RULESET.md`.
 - **Smoke playthrough:** menu → game → game-over → menu navigates; HUD (score/combo/lives/timer) updates; high score persists.
-- **Feel present** (not just correct): hit pop + SFX, miss feedback, combo escalation, expiry telegraph — per `spec/GAME-SPEC.md` Flavor section. A juice-less build **fails** playability (see [ACCEPTANCE](../spec/ACCEPTANCE.md) gameplay bar).
+- **Release polish present** (not just correct), per `spec/GAME-SPEC.md` Release-quality bar: full screen flow (splash/how-to-play/settings/pause), music + SFX + mute, app icon/splash, **no placeholders**, animated transitions, 60fps, haptics. A juice-less / placeholder / rough-UX build **fails** — the bar is "a game a human would keep" (≥ 8/10 + "uninstall test").
 - Determinism: same seed + input timeline → identical score.
 
 ## Output — sign off or block

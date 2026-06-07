@@ -39,6 +39,7 @@ Work feature-branch → PR → `ci.yml` green → **QA gate** (team config: the 
 - **M1** core loop (input → gesture recognition → ruleset → scoring/combo), procedural placeholder targets, seeded RNG; **unit tests** for scoring/combo/gesture/determinism, one **PlayMode** input→score test.
 - **M2** menus + HUD + high score + **Game Art** sprites/atlas + juice; **APK that installs** (via `build.yml` artifact); integration tests for lives/timer/game-over.
 - **M3** balance, robustness, gameplay-quality harness (bot player + recorder + judge); determinism replay test.
+- **M4 release polish** — full screen flow (splash/how-to-play/settings/pause), **music + SFX + haptics**, app icon/splash, animated transitions, 60fps perf pass, soak test. **Target ≥ 8/10 + "uninstall test"** ([release bar](spec/GAME-SPEC.md#release-quality-polish-the-real-goal-feels-like-a-game-a-human-would-keep)).
 Each significant change (incl. **CI green/red**) → Discord (post-only L3/L4, two-way L1) + append `docs/run-log.md`.
 
 **At each milestone checkpoint (M1/M2/M3 exit + any major architectural fork):** write/refresh formal ADRs in `adr/` for the significant architectural decisions made since the last checkpoint — follow `$SPEC_REPO/12-ADR-Process.md`, promoting them from the `docs/decisions.md` running log. Post the `adr/` summary to Discord.

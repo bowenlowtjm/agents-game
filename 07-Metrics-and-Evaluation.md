@@ -19,16 +19,18 @@ Same scorecard every run. Four buckets: **did it ship**, **code quality**, **gam
 | Honesty of self-report | over-claims, hides stubs | accurately lists stubs + known issues |
 | Art integration | placeholders only | generated sprites + packed atlas, consistent palette |
 
-## C. Gameplay quality (the new headline metric) — score /10
-Gameplay "feel" is the hard, interesting thing to measure with agents in the loop. Combine **objective proxies** + an **LLM judge** + (at L1 only) a **human rating**, then reconcile.
+## C. Gameplay & polish quality (the headline metric) — score /10, **release bar ≥ 8**
+The goal is a game a human would download and keep, so the bar is high. Combine **objective proxies** + an **LLM judge** + (at L1 only) a **human rating**, then reconcile.
 
 | Sub-metric | How measured | Weight |
 |-----------|--------------|--------|
-| **Input responsiveness** | tap→feedback latency (ms) from PlayMode instrumentation; target < 60ms | 2 |
-| **Readability** | can a fresh player tell which gesture each target wants? LLM judge on screenshots + human at L1 | 2 |
-| **Difficulty curve** | bot-player score distribution over seeded sessions; not trivially win/lose | 2 |
-| **Game feel / juice** | LLM judge on a 20s screen-capture: hit pop, miss flash, combo clarity, motion | 2 |
-| **Stability under play** | FPS stability + 0 softlocks across N seeded bot runs | 2 |
+| **Input responsiveness** | tap→feedback latency (ms) from PlayMode instrumentation; target < 60ms | 1.5 |
+| **Readability** | can a fresh player tell which gesture each target wants? LLM judge on screenshots + human at L1 | 1.5 |
+| **Difficulty curve** | bot-player score distribution over seeded sessions; not trivially win/lose | 1 |
+| **Game feel / juice** | LLM judge on a 20s capture: hit pop, miss flash, combo escalation, transitions, **audio**, haptics | 2 |
+| **Finish / polish** | app icon + splash, **no placeholders**, complete UX (onboarding/settings/pause), animated menus | 2 |
+| **Stability + perf** | stable **60fps**, 0 softlocks/crashes across N seeded bot runs + extended play | 1 |
+| **"Uninstall test"** | judge (+ L1 human): would a real player keep it past a few sessions? | 1 |
 
 **Mechanics:**
 - **Bot player** — a scripted/agent player drives seeded sessions; we log score, misses, session length, FPS. Removes human bottleneck from the quantitative half.
@@ -40,7 +42,7 @@ Gameplay "feel" is the hard, interesting thing to measure with agents in the loo
 ## D. Cost & autonomy
 - **Human interventions** (count + type) — the headline autonomy number.
 - **Wall-clock** to green APK · **tokens** total + per role · **retries** at the bottleneck.
-- **Rung reached** — highest of L1/L3/L4 that still shipped *and* cleared the gameplay-quality bar (PM-set, e.g. ≥ 6/10).
+- **Rung reached** — highest of L1/L3/L4 that still shipped *and* cleared the **release-polish bar (≥ 8/10)**.
 
 ## The comparisons that matter
 1. **Solo (A, flat docs) vs Hermes role-team (B, OpenViking)** at equal budget — does orchestration + roles earn its overhead? (Note: this bundles the memory-backend change — see caveat in [Architecture › Memory](04-Agent-Team-Architecture.md#memory).)

@@ -1,6 +1,6 @@
 # Roadmap
 
-Milestones double as the **checkpoint boundaries** for [Autonomy Ladder](05-Autonomy-Ladder.md) L2 runs.
+Milestones double as the **checkpoint boundaries** ([Autonomy Ladder](05-Autonomy-Ladder.md) L1/L3/L4) and as the ADR-pass points. The end goal is a **release-quality** game (debug build) — polish is its own milestone (M4), not an afterthought.
 
 ## M0 — Harness & bridge proof (human-led)
 Goal: prove the plumbing before testing autonomy.
@@ -25,21 +25,30 @@ Goal: prove the plumbing before testing autonomy.
 - Main menu + game-over screens; HUD (score/combo/timer).
 - **Game Art** replaces placeholders with generated 2D sprites + packed atlas; palette in `DESIGN.md`.
 - Local high score persistence.
-- Minimal juice (hit pop, miss flash, score tween).
+- First-pass juice (hit pop, miss flash, score tween) — full polish lands in M4.
 - Android debug APK installs + launches on device/emulator.
-- **Exit:** [Charter DoD](01-Experiment-Charter.md#definition-of-done-per-run) met; **ADR pass** for scene/prefab structure, art/atlas pipeline, and persistence.
+- **Exit:** core game loop complete and installable; **ADR pass** for scene/prefab structure, art/atlas pipeline, and persistence.
 
 ## M3 — Balance, robustness & gameplay-quality harness
 - Tune ruleset (reward/penalty), edge-input handling, no softlocks.
-- Stand up the **bot player + Unity Recorder + LLM judge** (see [Metrics §C](07-Metrics-and-Evaluation.md#c-gameplay-quality-the-new-headline-metric)).
+- Stand up the **bot player + Unity Recorder + LLM judge** (see [Metrics §C](07-Metrics-and-Evaluation.md#c-gameplay--polish-quality-the-headline-metric--score-10-release-bar--8)).
 - Full test pass; deterministic replay of a seeded session.
-- **Exit:** Code-quality B ≥ 11/15 **and** Gameplay-quality ≥ 6/10 (PM bar); **ADR pass** for determinism/replay + balance config; `adr/` set is complete and ordered by blast radius.
+- **Exit:** Code-quality B ≥ 11/15 **and** core gameplay quality ≥ 6/10 (interim, pre-polish); **ADR pass** for determinism/replay + balance config.
 
-## M4 — Autonomy stress tests
+## M4 — Release polish (the download-worthy bar)
+Take it from "works" to "a game someone would keep" — see [GAME-SPEC › Release-quality polish](spec/GAME-SPEC.md#release-quality-polish-the-real-goal-feels-like-a-game-a-human-would-keep).
+- **Full screen flow:** splash, skippable how-to-play, settings, pause (on top of menu/game/game-over).
+- **Audio:** music loop + full SFX set + mute/volume in settings; haptics.
+- **Finish:** app icon + splash, **all placeholders replaced**, animated transitions + button states, big score popups + new-high-score moment.
+- **Performance pass:** stable **60fps** on a mid-range device, cold start < ~3s, no GC hitches; backgrounding/orientation handled.
+- **Soak test:** no crashes/softlocks across extended play.
+- **Exit:** [Charter DoD](01-Experiment-Charter.md#definition-of-done-per-run) met incl. polish item; **Gameplay & polish quality ≥ 8/10** (release bar); passes the **"uninstall test"**; `adr/` set complete and ordered by blast radius.
+
+## M5 — Autonomy stress tests
 Run the [Autonomy Ladder](05-Autonomy-Ladder.md) **3×2 grid** (Config A solo vs B Hermes role-team × **L1 / L3 / L4**, memory on/off optional). Then optional stretch:
 - **"True-3D-ify" run** — give targets depth/meshes + perspective camera as a *cold-start autonomy test* on the existing codebase.
 - **New-mechanic run** — hand the team a one-line feature ("add a power-up") at L3 and measure.
 - **Exit:** results table + writeup (see [Metrics › Output](07-Metrics-and-Evaluation.md#output)).
 
 ## Sequencing note
-Do **M0–M2 once at L0/L1** to establish a working reference build and seed memory. *Then* reset and run the autonomy grid — so lower rungs aren't unfairly starting from zero with no `GOTCHAS.md`. Decide explicitly whether each grid run starts from empty repo or from the M0 scaffold; keep it constant within a comparison.
+Do **M0–M4 once at L1** to establish a polished reference build and seed memory. *Then* reset and run the autonomy grid (M5) — so lower rungs aren't unfairly starting from zero with no `GOTCHAS.md`. Decide explicitly whether each grid run starts from empty repo or from the M0 scaffold; keep it constant within a comparison.
