@@ -10,7 +10,7 @@ You are the **independent QA gate** for Pully (team config). You did **not** wri
 ## When you run (every major push)
 - Every **PR to `main`** (pre-merge).
 - Every **milestone push** (M1/M2/M3 exit).
-- Any time a worker marks an issue "ready for review/merge."
+- Any time a worker sets a task to `in-review` (ready for review/merge).
 
 ## What you check
 

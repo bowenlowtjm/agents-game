@@ -8,7 +8,7 @@ An experiment: **how much of a shippable mobile game can an agent team produce, 
 - **Engine:** 3D engine (Unity), **2D-sprite gameplay** (sprites/quads in a 3D scene). See [Game Design Brief](02-Game-Design-Brief.md).
 - **Harness:** Hermes. **Phase 1 = Kimi K2.5 only**; swap in Codex (A/B) in Phase 2.
 - **Roles:** native Hermes role-agents (no Claude Code) + two custom agents — **Game Product Manager** and **Game Art**. Parallelism via `git worktree`.
-- **Work org:** [Linear — team SAA](https://linear.app/saaavvvy-dev-space/team/SAA/active) (backlog, issue states gate autonomy).
+- **Work org:** local `tasks/` board (markdown, one file per task; `status: done` gates autonomy). No external tracker.
 - **Comms:** Discord — two-way bot/MCP at L1, post-only webhook feed of significant changes at L3/L4.
 - **Editor bridge:** Unity MCP (agents drive the Editor). See [Toolchain & Setup](03-Toolchain-and-Setup.md).
 
@@ -37,8 +37,8 @@ An experiment: **how much of a shippable mobile game can an agent team produce, 
 |-----|---------|
 | [Experiment Charter](01-Experiment-Charter.md) | Goal, hypotheses, what "done" means |
 | [Game Design Brief — Pully](02-Game-Design-Brief.md) | The game spec the agents build against |
-| [Toolchain & Setup](03-Toolchain-and-Setup.md) | Unity, MCP, Hermes roles, Linear, repo layout |
-| [Agent Team Architecture](04-Agent-Team-Architecture.md) | Hermes role-agents + Game PM + Game Art, memory, Linear flow |
+| [Toolchain & Setup](03-Toolchain-and-Setup.md) | Unity, MCP, Hermes roles, `tasks/` board, repo layout |
+| [Agent Team Architecture](04-Agent-Team-Architecture.md) | Hermes role-agents + Game PM + Game Art, memory, task flow |
 | [Autonomy Ladder](05-Autonomy-Ladder.md) | The 3 human-involvement levels tested: **L1 / L3 / L4** |
 | [Workflow & Guardrails](06-Workflow-and-Guardrails.md) | Run loop, commit discipline, what stops a run |
 | [Metrics & Evaluation](07-Metrics-and-Evaluation.md) | Shipped / code-quality / **gameplay-quality** / cost |

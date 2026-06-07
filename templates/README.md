@@ -18,6 +18,7 @@ These files are copied **verbatim into the new run repo** at Step 0 of [../RUN-P
 | `.github/workflows/build.yml` | Android APK artifact on `main` (GameCI) | add `UNITY_*` secrets in repo |
 | `docs/decisions.md` · `CONVENTIONS.md` · `GOTCHAS.md` · `run-log.md` | project memory | append during the run |
 | `adr/README.md` | ADR index + template | write `ADR{NNN}-*.md` at milestone checkpoints (`$SPEC_REPO/12-ADR-Process.md`) |
+| `tasks/BOARD.md` · `tasks/TEMPLATE.md` | local task board (replaces Linear) | PM writes `T###-*.md` task files; `status: done` gates autonomy |
 | `.gitignore` | Unity ignores | none — ready |
 
 After copying: create the Unity 6 **3D** project around these (Android module, Input System, 2D Sprite + 2D Atlas), then commit `chore: scaffold <RUN_ID> from spec kit`.

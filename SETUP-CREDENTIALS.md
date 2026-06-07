@@ -20,10 +20,8 @@ The role layer (orchestrator + game-pm + game-art + eng/qa/release) runs as **na
 | 🔴 Unity account + activated license | `UNITY_EMAIL`,`UNITY_PASSWORD`,`UNITY_LICENSE` | unity.com (Personal=free) | **batchmode/CI need an activated license file (.ulf) or serial — not just a login** |
 | ✅ Unity MCP (community server) | — | — | free; needs the Editor running |
 
-## 4. Work tracking — Linear (🔴)
-| Cred | Var | Where | Notes |
-|------|-----|-------|-------|
-| 🔴 Linear API key | `LINEAR_API_KEY` | Linear → Settings → API → Personal API key | scope to team **SAA** |
+## 4. Work tracking — local `tasks/` (✅ no credential)
+Coordination is local markdown (`tasks/T###-*.md` + `BOARD.md`) committed with the repo. **No API key, no service.** (Replaced Linear.)
 
 ## 5. Comms — Discord (🟡)
 | Cred | Var | Where | For |
@@ -89,8 +87,7 @@ UNITY_EMAIL=
 UNITY_PASSWORD=
 UNITY_LICENSE=            # contents of the .ulf, or use serial
 
-# Linear (required)
-LINEAR_API_KEY=
+# Work tracking: local tasks/ markdown — no key needed
 
 # Discord (L3/L4 webhook; L1 bot)
 DISCORD_WEBHOOK_URL=
@@ -111,7 +108,7 @@ VIKING_API_KEY=           # only if server is secured
 ## Quick checklist (minimum to launch a first L1 run, solo config)
 - [ ] `MOONSHOT_API_KEY` (Phase 1 = Kimi only; Codex/`OPENAI_API_KEY` deferred to Phase 2)
 - [ ] Unity account + **activated** license
-- [ ] `LINEAR_API_KEY` (team SAA)
+- [ ] (work tracking: local `tasks/` — no key)
 - [ ] `DISCORD_BOT_TOKEN` (L1) **or** `DISCORD_WEBHOOK_URL` (L3/L4)
 - [ ] Native Hermes role-agents defined (§2) — pointed at the model keys
 - [ ] (Solo run) flat-docs memory — no cred. (Team run) OpenViking server up (§8)

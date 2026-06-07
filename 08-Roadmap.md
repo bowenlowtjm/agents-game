@@ -6,20 +6,20 @@ Milestones double as the **checkpoint boundaries** ([Autonomy Ladder](05-Autonom
 Goal: prove the plumbing before testing autonomy.
 - Unity 6 LTS + Android module; empty **3D** project committed.
 - Hermes role-agents defined in `roles/`; `AGENTS.md` manifest; **Game PM** + **Game Art** wired; `git worktree` parallelism ready.
-- Unity MCP + **Linear MCP** connected to Hermes; smoke-test scene create + console read + create an `SAA-###` issue.
+- Unity MCP connected to Hermes; smoke-test scene create + console read; **`tasks/` board** scaffolded (create a `T###` task file + update its status).
 - **Discord** wired: webhook (post-only feed for L3/L4) + bot/MCP (two-way channel for L1); agent posts a test significant-change.
 - `Builder.cs` batchmode → debug APK *by hand* once (baseline path exists).
 - **CI live:** push scaffold to GitHub, add `UNITY_*` secrets, confirm `ci.yml` green on the sample tests and `build.yml` produces an APK artifact ([Testing & CI/CD](10-Testing-and-CICD.md)).
 - Memory ready: flat `docs/` (solo) or OpenViking server (team), seeded; `DESIGN.md` started.
-- **Exit:** an agent reads the Unity console, creates a scene, files a Linear issue, and **opens a green PR through CI**.
+- **Exit:** an agent reads the Unity console, creates a scene, files a `T###` task, and **opens a green PR through CI**.
 
 ## M1 — Core loop, agent-built (first ladder run)
-- **Game PM** breaks the brief into the `SAA` backlog in Linear.
+- **Game PM** breaks the brief into the `tasks/` backlog (one `T###` file per deliverable + `BOARD.md`).
 - Input System wired; gesture recognizer (single/double/long/swipe/two-finger).
 - Ruleset ScriptableObject + scoring + combo.
 - One game scene, targets spawn (procedural shapes/colors placeholders), seeded RNG.
 - EditMode unit tests (scoring/combo, gesture classification, ruleset, determinism); PlayMode integration test (input→score).
-- **Exit:** core loop playable in Editor; `ci.yml` green on the PR; issues moved through `SAA` board; **ADR pass** in `adr/` for the core-loop architecture (ruleset data model, gesture recognition, seeded spawn) — see [ADR Process](12-ADR-Process.md).
+- **Exit:** core loop playable in Editor; `ci.yml` green on the PR; tasks moved through `tasks/BOARD.md`; **ADR pass** in `adr/` for the core-loop architecture (ruleset data model, gesture recognition, seeded spawn) — see [ADR Process](12-ADR-Process.md).
 
 ## M2 — Playable build + art pass
 - Main menu + game-over screens; HUD (score/combo/timer).

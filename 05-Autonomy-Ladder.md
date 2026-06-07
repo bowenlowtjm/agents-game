@@ -4,10 +4,10 @@ The core experiment: build Pully at **three** human-involvement levels — **L1,
 
 > Scope: we deliberately skip L0 (full pair) and L2 (milestone-gate) to focus on the three points that bracket the interesting transition — **supervised**, **fire-and-forget from a spec**, and **fully autonomous**.
 
-| Rung | Human role | Human touches | Linear (SAA) gate | What it tests |
+| Rung | Human role | Human touches | `tasks/` done-gate | What it tests |
 |------|-----------|---------------|-------------------|---------------|
-| **L1 — Reviewer** | PR/issue gatekeeper | Reviews each merge, approves/rejects, answers questions when asked | Human moves issues `In Review → Done` | Can the team self-drive *between* checkpoints? |
-| **L3 — Spec-only** | Author, then absent | Writes the brief, presses go, returns at the end | Team self-transitions; human reads final board | Is spec + memory + roles enough? Where does it silently fail? |
+| **L1 — Reviewer** | PR/task gatekeeper | Reviews each merge, approves/rejects, answers questions when asked | Human sets task `status: done` | Can the team self-drive *between* checkpoints? |
+| **L3 — Spec-only** | Author, then absent | Writes the brief, presses go, returns at the end | Team self-marks done; human reads final `BOARD.md` | Is spec + memory + roles enough? Where does it silently fail? |
 | **L4 — Autonomous** | Observer | No input; team self-specs from a one-line prompt | Game PM agent owns the whole board | Pure capability ceiling of the harness |
 
 ## Who decides open design/art questions
@@ -31,7 +31,7 @@ The human↔agent channel changes shape with autonomy — one-way feed when the 
 | **L4 — Autonomous** | **Significant-change feed** | Discord **webhook** (post-only) | one-way — agent broadcasts; you observe |
 
 - **L1** uses Discord as a genuine back-and-forth workspace: the team pings questions, balance/art choices, and merge approvals; your replies unblock it (these count as interventions in [Metrics](07-Metrics-and-Evaluation.md)).
-- **L3/L4** post *significant changes only* (milestone, issue→Done, build produced, decision logged, escalation) so the feed stays signal-dense. No human reply is part of the run; at L4 an escalation that *would* need a human is itself a recorded failure of autonomy.
+- **L3/L4** post *significant changes only* (milestone, task→done, build produced, decision logged, escalation) so the feed stays signal-dense. No human reply is part of the run; at L4 an escalation that *would* need a human is itself a recorded failure of autonomy.
 - **Running runs in parallel?** Each run gets its own channel/thread and posts are prefixed `[RUN_ID]` — see [Parallel Runs & Discord Routing](11-Parallel-Runs.md).
 
 ## Protocol
@@ -52,7 +52,7 @@ Shipping holds at **L1**, gets shaky at **L3** (silent stubs, over-claiming, art
 ```
 Run: pully-B-L3 / memory=OpenViking
 Models: orch=Kimi K2.5, workers=Kimi K2.5   (Phase 1)
-Linear: SAA epic #__, 9/11 issues Done
+Tasks: 9/11 done (tasks/BOARD.md)
 Outcome: APK built ✅ / wrong gesture mapping ❌ / art atlas ✅
 Human interventions: 0 (spec-only)
 Gameplay quality: 7/10 (judge) · latency 48ms · 0 softlocks

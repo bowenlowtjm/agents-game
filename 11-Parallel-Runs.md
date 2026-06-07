@@ -1,6 +1,6 @@
 # Parallel Runs & Discord Routing
 
-Running the [Autonomy Ladder](05-Autonomy-Ladder.md) 3×2 grid (and model phases) means many runs. They can run **in parallel** — each run is already isolated (new repo per `RUN_ID`, git worktrees, own Linear issues). To run N at once, namespace every *shared* resource.
+Running the [Autonomy Ladder](05-Autonomy-Ladder.md) 3×2 grid (and model phases) means many runs. They can run **in parallel** — each run is already isolated (new repo per `RUN_ID`, git worktrees, own local `tasks/` board). To run N at once, namespace every *shared* resource.
 
 ## Isolation checklist (per concurrent run)
 | Resource | Collision risk | Isolation |
@@ -10,7 +10,7 @@ Running the [Autonomy Ladder](05-Autonomy-Ladder.md) 3×2 grid (and model phases
 | **Headless refresh server** | `LocalRefreshServer` binds a port | `PULLY_REFRESH_PORT` unique per run (e.g. 8090, 8091) |
 | **OpenViking (team mem)** | cross-run contamination | namespace `viking://runs/<RUN_ID>/`; or a separate instance |
 | **flat-docs (solo mem)** | — | per-repo already, no action |
-| **Linear (SAA)** | one board, many runs | label or sub-project `run:<RUN_ID>` on every issue |
+| **Task board** | — | `tasks/` is local per-repo, so runs never collide (no shared tracker to namespace) |
 | **Model API keys** | shared rate limits | mind quotas; per-run key or a gateway with per-run budget |
 | **CI (GameCI)** | — | naturally parallel on GitHub runners — **push heavy test/build here** |
 | **Discord** | interleaved posts | one channel/thread per run (below) |
@@ -21,10 +21,10 @@ Running the [Autonomy Ladder](05-Autonomy-Ladder.md) 3×2 grid (and model phases
 A thin launcher starts each run and records it in a **registry**:
 1. Scaffold the run repo from `$SPEC_REPO/templates/` (per [RUN-PROTOCOL](RUN-PROTOCOL.md)).
 2. Start Unity + MCP on a free `UNITY_MCP_PORT`.
-3. Assign the Discord target + Linear label + Viking namespace.
+3. Assign the Discord target + Viking namespace (tasks are local per-repo — nothing to assign).
 4. Hand the agent its run-parameter block; launch.
 
-Keep a registry mapping `RUN_ID ↔ repo ↔ UNITY_MCP_PORT ↔ discord-target ↔ linear-label` (a simple `runs/registry.md` or a Linear project). The launcher must allocate unique ports and Discord targets so two runs never share.
+Keep a registry mapping `RUN_ID ↔ repo ↔ UNITY_MCP_PORT ↔ PULLY_REFRESH_PORT ↔ discord-target` (a simple `runs/registry.md`). The launcher must allocate unique ports and Discord targets so two runs never share.
 
 ## Discord disambiguation — DECIDED: channel-per-run
 A **"Pully Experiments" category** with **one channel named `<RUN_ID>`** per run, plus a `#pully-control` channel for cross-run roll-ups. Each run → its own webhook (L3/L4) or the shared bot scoped to that channel (L1). Clean, skimmable, and one channel = one run's full history.
@@ -53,5 +53,5 @@ UNITY_MCP_PORT:    <unique per concurrent run>        # e.g. 6401, 6402, …
 PULLY_REFRESH_PORT: <unique per concurrent run>       # e.g. 8090, 8091 — headless compile-check server
 DISCORD_TARGET:    <channel-id (bot, L1) | webhook-url (L3/L4)>   # the run's own channel; replaces shared DISCORD
 VIKING_NAMESPACE:  viking://runs/<RUN_ID>/            # team memory (Config B)
-LINEAR_LABEL:      run:<RUN_ID>                        # on every SAA issue
+# (work tracking: local tasks/ in each run repo — nothing to namespace)
 ```

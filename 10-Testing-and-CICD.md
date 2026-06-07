@@ -51,7 +51,7 @@ Both cache the Unity `Library/` folder for speed and require the Unity license s
 
 ## Why this matters per autonomy rung
 - **L1:** CI gives the human reviewer a green/red signal to approve against.
-- **L3/L4:** CI *is* the human's stand-in. "Tests pass + APK artifact exists" is the only trustworthy "done" — it's what stops the over-claiming failure mode. A team that marks issues Done with red CI is auto-failing the honesty metric.
+- **L3/L4:** CI *is* the human's stand-in. "Tests pass + APK artifact exists" is the only trustworthy "done" — it's what stops the over-claiming failure mode. A team that marks tasks `done` with red CI is auto-failing the honesty metric.
 
 ## Acceptance hooks
 The [ACCEPTANCE](spec/ACCEPTANCE.md) gates require: tests present, **`ci.yml` green**, and **`build.yml` produced an APK artifact**. No green CI → not done.

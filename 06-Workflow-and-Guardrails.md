@@ -8,7 +8,7 @@ How a run actually executes, and what keeps an unattended run safe and honest.
 3. **Verify** — after each C# edit run `scripts/unity-check.sh` (headless refresh + compile + read errors, no Editor focus needed) until CLEAN; then run tests, check console, attempt build.
 4. **Gate** — open a PR. On every major push the **independent QA role** runs ([roles/qa](roles/qa.SKILL.md)): errors (compile/CI/console) + playability (bot run, smoke playthrough, feel). Orchestrator merges only on **QA PASS + green `ci.yml`**; else QA bounces it back with the failing check. (Solo config: the lone agent runs the QA checklist itself.)
 5. **Record** — append to `run-log.md`; promote any new trap to `GOTCHAS.md`; log decisions in `docs/decisions.md`. **At milestone checkpoints / major architectural forks,** promote significant architectural decisions into formal ADRs in `adr/` (see [ADR Process](12-ADR-Process.md)).
-6. **Broadcast** — if the change is *significant* (milestone, issue→Done, build produced, decision logged, escalation), post to Discord (see [Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)): post-only webhook at L3/L4, two-way channel at L1.
+6. **Broadcast** — if the change is *significant* (milestone, task→done, build produced, decision logged, escalation), post to Discord (see [Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)): post-only webhook at L3/L4, two-way channel at L1.
 
 Verification is non-negotiable: **"done" must come with an artifact** (clean console, passing test, APK path). This is what prevents the over-claiming failure mode at high autonomy.
 
@@ -36,5 +36,5 @@ Verification is non-negotiable: **"done" must come with an artifact** (clean con
 
 ## Human-involvement mechanics per rung
 - **L1 (Reviewer / agent pair):** human responds in the **Discord two-way channel**; the team asks questions + requests merge/issue approval; replies count as interventions.
-- **L3 (Spec-only):** detached after the brief; team self-transitions issues and posts *significant changes* to the **Discord webhook feed**; no reply expected. Spec-ambiguity → log assumption, proceed, flag it.
+- **L3 (Spec-only):** detached after the brief; team self-marks tasks `done` and posts *significant changes* to the **Discord webhook feed**; no reply expected. Spec-ambiguity → log assumption, proceed, flag it.
 - **L4 (Autonomous):** fully detached; only the escalation triggers above can interrupt. A trigger that genuinely needs a human is logged as an **autonomy failure**, not silently retried forever.

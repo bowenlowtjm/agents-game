@@ -8,7 +8,7 @@ Same scorecard every run. Four buckets: **did it ship**, **code quality**, **gam
 - [ ] APK installs + launches
 - [ ] **CI green** (`ci.yml` tests pass) + APK artifact from `build.yml`
 - [ ] Self-report produced
-- [ ] Linear `SAA` board reflects real state (no fake "Done")
+- [ ] `tasks/BOARD.md` reflects real state (no fake "done")
 
 ## B. Code quality (0–3 each)
 | Dimension | 0 | 3 |

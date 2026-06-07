@@ -10,8 +10,6 @@ CONFIG:        A (solo)  |  B (Hermes role-team)
 RUNG:          L1 (reviewer) | L3 (spec-only) | L4 (autonomous)
 MODELS:        orchestrator=KimiK2.5  workers=KimiK2.5     # Phase 1 = Kimi-only; swap Codex in Phase 2
 MEMORY:        flat-docs (default for A)  |  OpenViking (default for B)
-LINEAR_TEAM:   SAA
-LINEAR_LABEL:  run:<RUN_ID>                            # so parallel runs don't blur the board
 DISCORD_TARGET: <webhook-url (L3/L4) | channel-id for the bot (L1)>   # per run — see Parallel Runs
 ART_STYLE:     <flat-vector | pixel | …>   # L1/L3: human sets here. L4: leave "AGENT-DECIDES"
 REPO_LOCATION: <path or git remote for the NEW repo>
@@ -19,7 +17,7 @@ UNITY_MCP_PORT: <unique per concurrent run>           # e.g. 6401, 6402 — only
 PULLY_REFRESH_PORT: <unique per concurrent run>       # e.g. 8090, 8091 — headless compile-check server port
 VIKING_NAMESPACE: viking://runs/<RUN_ID>/             # Config B team memory; omit for solo/flat-docs
 ```
-> Running several at once? See [Parallel Runs & Discord Routing](11-Parallel-Runs.md) — every shared resource (Editor port, memory namespace, Linear label, Discord channel) must be unique per run.
+> Running several at once? See [Parallel Runs & Discord Routing](11-Parallel-Runs.md) — every shared resource (Editor port, refresh port, memory namespace, Discord channel) must be unique per run. (Tasks are local per-repo, so no shared tracker to namespace.)
 
 ## Step 0 — Create the new repo (never build in the spec repo)
 1. `git init` a new repo at `REPO_LOCATION`, named `RUN_ID`.
@@ -28,10 +26,10 @@ VIKING_NAMESPACE: viking://runs/<RUN_ID>/             # Config B team memory; om
 4. Commit: `chore: scaffold <RUN_ID> from spec kit`.
 
 ## Step 1 — Set up the rails
-- Connect Unity MCP, Linear MCP, and Discord (webhook or bot per `RUNG`).
+- Connect Unity MCP and Discord (webhook or bot per `RUNG`); the `tasks/` board is just local files (no service to connect).
 - Push the scaffold to GitHub; add Unity license secrets (`UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`); **confirm `ci.yml` runs green** on the scaffold's sample tests (proves the test+CI loop before any feature work). See [Testing & CI/CD](10-Testing-and-CICD.md).
 - **Verify the headless compile-check loop:** `scripts/unity-check.sh` flags a deliberately-broken `.cs` and returns CLEAN once fixed — no Editor focus. This is the agent's tightest feedback loop ([Toolchain › Headless compile & error check](03-Toolchain-and-Setup.md#headless-compile--error-check-no-window-focus)).
-- **Game PM** (team config) reads `spec/GAME-SPEC.md` → creates the `SAA` epic + issues for this run.
+- **Game PM** (team config) reads `spec/GAME-SPEC.md` → creates the `tasks/` backlog (`T###` files + `BOARD.md`) for this run.
 - Memory: use `MEMORY` backend; seed `DESIGN.md` with `ART_STYLE` (or mark AGENT-DECIDES at L4).
 
 ## Step 2 — Build to the milestones (test-driven, PR-gated)
@@ -47,14 +45,14 @@ Each significant change (incl. **CI green/red**) → Discord (post-only L3/L4, t
 ## Step 3 — Acceptance & record
 - Verify against `spec/ACCEPTANCE.md` (every gate + quality bars).
 - Write the final entry in `docs/run-log.md` using the template there (outcome, interventions, code/15, gameplay/10, time, tokens, bottleneck, new gotchas).
-- Tag the repo `run/<RUN_ID>`; ensure the `SAA` board matches reality (no fake "Done").
+- Tag the repo `run/<RUN_ID>`; ensure `tasks/BOARD.md` matches reality (no fake "done").
 
 ## Autonomy rung — what changes
 | | L1 (Reviewer) | L3 (Spec-only) | L4 (Autonomous) |
 |---|---|---|---|
 | Human presence | in the loop | absent after launch | absent entirely |
 | Open decisions (art/balance) | human, live (Discord) | human, baked into params up front | **agent decides + logs** |
-| Linear `→ Done` | human approves | team self-transitions | team self-transitions |
+| Task `→ done` | human approves | team self-marks | team self-marks |
 | Discord | two-way bot/channel | post-only feed | post-only feed |
 | Blocker needing human | ask in Discord | log assumption, proceed, flag | **counts as autonomy failure** |
 

@@ -35,17 +35,17 @@ The agent runs `unity-check.sh` after writing code and **before** running tests;
 - **Models under test:** **Kimi K2.5** and **Codex**, A/B'd across orchestrator vs worker roles (see [Architecture](04-Agent-Team-Architecture.md#model-placement-to-test)). *No Anthropic/Claude required* — it's only an optional extra model.
 - **CLI build path:** Unity batchmode (`-batchmode -executeMethod Builder.BuildAndroid`) so the build is an agent-callable tool, not a human click. Cloud option: **GameCI** GitHub Action (see [Tool-Stack Options](09-Tool-Stack-Options.md)).
 
-## Layer 4 — Work organization & comms (Linear + Discord)
-**Linear (backlog/state):**
-- **[Linear — team SAA](https://linear.app/saaavvvy-dev-space/team/SAA/active)** is the backlog + state machine.
-- The **Game PM agent** authors epics/issues from the [Game Brief](02-Game-Design-Brief.md); the orchestrator pulls issues; workers move them `Todo → In Progress → In Review → Done`; Release closes them on merge.
-- **Issue-state transitions encode the autonomy level** (see [Autonomy Ladder](05-Autonomy-Ladder.md)): who is allowed to move an issue to Done — a human (L1) or the team itself (L3/L4).
-- Integration: **Linear MCP** so agents create/update/transition issues directly; link each branch/PR to its `SAA-###` issue.
+## Layer 4 — Work organization & comms (local `tasks/` + Discord)
+**Local task board (no external tracker):**
+- Coordination is **local markdown** in `tasks/` — one file per task, `tasks/T###-slug.md`, with a `tasks/BOARD.md` index. No API key, no service. (Replaces Linear.)
+- The **Game PM agent** decomposes the [Game Brief](02-Game-Design-Brief.md) into task files; the orchestrator pulls `todo` tasks; workers move `status: todo → in-progress → in-review → done`; the QA gate runs at `in-review`.
+- **The `status: done` transition encodes the autonomy level** (see [Autonomy Ladder](05-Autonomy-Ladder.md)): who is allowed to mark a task done — a human (L1) or the team itself (L3/L4).
+- One-file-per-task avoids merge conflicts across parallel role worktrees; each branch/PR/commit references its `T###`.
 
 **Discord (human↔agent comms):** two mechanisms, chosen by autonomy rung (see [Autonomy Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)):
 - **Post-only (L3/L4)** — a **Discord webhook**. The agent broadcasts *significant changes* to a feed channel; no read-back. Zero-infra, fire-and-forget.
 - **Two-way channel (L1)** — a **Discord bot / Discord MCP** the agent can both post to *and read replies from* — questions, approvals, design answers flow back in-channel.
-- **"Significant change"** = milestone reached, issue→Done, build produced (APK path), a logged decision, or a blocker/escalation. Each post links the `SAA-###` issue + commit.
+- **"Significant change"** = milestone reached, task→done, build produced (APK path), a logged decision, or a blocker/escalation. Each post links the `T###` task + commit.
 
 ## Layer 5 — Memory & knowledge
 Backend is **paired to the config** (decided — see [Architecture › Memory](04-Agent-Team-Architecture.md#memory)):
@@ -66,6 +66,7 @@ pully/
     Tests/            # EditMode + PlayMode
   Editor/Builder.cs   # batchmode build (agent-callable)
   docs/               # decisions / CONVENTIONS / GOTCHAS / run-log
+  tasks/              # local task board: T###-*.md + BOARD.md (replaces Linear)
   DESIGN.md           # art style + taste memory
   AGENTS.md           # harness role manifest + routing
   ProjectSettings/  Packages/
@@ -76,7 +77,7 @@ pully/
 - [ ] Hermes role-agents defined (`roles/`); `AGENTS.md` manifest in repo; **Game PM** + **Game Art** wired
 - [ ] Unity MCP connected to Hermes; smoke-test "read console" + "create scene"
 - [ ] Headless error check works: `scripts/unity-check.sh` reports a deliberately-broken `.cs` as an error, then CLEAN once fixed — no manual Editor focus
-- [ ] Linear MCP connected; PM agent can create/transition an `SAA-###` issue
+- [ ] `tasks/` board scaffolded; PM agent can create a `T###` task file and update its `status:`
 - [ ] Discord set up: **webhook** (post-only feed, L3/L4) + **bot/MCP** (two-way, L1); agent posts a test "significant change"
 - [ ] `Builder.cs` batchmode → debug APK *by hand* once (baseline path)
 - [ ] GitHub repo + `UNITY_*` secrets; `ci.yml` green on sample tests; `build.yml` yields an APK artifact (see [Testing & CI/CD](10-Testing-and-CICD.md))

@@ -16,7 +16,7 @@ Orchestrator drives a Think→Plan→Build→Review→Test→Ship→Reflect loop
 - **After every C# edit, run `scripts/unity-check.sh`** (headless refresh + compile + read errors — no Editor focus). Fix until CLEAN before tests/build. Set `PULLY_REFRESH_PORT` (live Editor) or `UNITY_BIN` (CLI).
 - Tests under `Assets/Tests/` (EditMode unit + PlayMode integration). Add tests with each feature; seeded RNG → deterministic sessions. A passing sample of each ships in the scaffold.
 - CI: `ci.yml` runs tests on every PR — **merge only when green**. `build.yml` produces the Android APK artifact on `main` (GameCI builder). `Editor/Builder.cs` is for *local* batchmode only (→ `Builds/Android/pully.apk`); don't use it as GameCI `buildMethod`.
-- Every significant change (incl. CI status): append `docs/run-log.md`, post to Discord per rung, link the `SAA-###` issue.
+- Every significant change (incl. CI status): append `docs/run-log.md`, post to Discord per rung, link the `T###` task (`tasks/`).
 - At **milestone checkpoints / major architectural forks**, write formal ADRs in `adr/` for significant architectural decisions (promote from `docs/decisions.md`) — follow `$SPEC_REPO/12-ADR-Process.md`.
 
 ## Memory

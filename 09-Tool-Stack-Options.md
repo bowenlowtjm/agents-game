@@ -1,6 +1,6 @@
 # Tool-Stack Options
 
-Beyond the decided core (Unity + Unity MCP + Hermes native role-agents + Linear + OpenViking), here are the stacks worth considering, by job. Pick one per row and hold constant within a comparison. **No Claude Code / gstack** (dropped).
+Beyond the decided core (Unity + Unity MCP + Hermes native role-agents + local `tasks/` board + OpenViking), here are the stacks worth considering, by job. Pick one per row and hold constant within a comparison. **No Claude Code / gstack** (dropped).
 
 ## 1. 2D sprite / art generation (for the Game Art agent)
 | Tool | Strength | Notes |
@@ -52,11 +52,11 @@ Beyond the decided core (Unity + Unity MCP + Hermes native role-agents + Linear 
 | crewAI / LangGraph / AutoGen | if you want a dedicated multi-agent framework over Hermes |
 | OpenHands | model-agnostic autonomous coding agent (single strong agent) |
 
-## 7. Work tracking (context — Linear is chosen)
+## 7. Work tracking (context — local `tasks/` is chosen)
 | Tool | Note |
 |------|------|
-| **Linear (SAA) + Linear MCP** | chosen: backlog + autonomy-gating state machine |
-| **GitHub Issues/Projects** | alt if you want issues next to code |
+| **Local `tasks/` markdown** | chosen: one file per task + `BOARD.md`; `status: done` gates autonomy; zero cred, versioned with code |
+| **Linear / GitHub Issues / Projects** | external alts — drop only if you want a hosted board + its API key/MCP |
 
 ## 8. Agent memory backends
 Decided pairing: **flat `docs/` for the solo run**, **OpenViking for the team run** (see [Architecture › Memory](04-Agent-Team-Architecture.md#memory)). Alternatives if they underperform:
@@ -77,4 +77,4 @@ Decided pairing: **flat `docs/` for the solo run**, **OpenViking for the team ru
 **Worth testing here:** **Letta** for L4 autonomous runs (agent-managed memory is exactly the autonomy question), and **Zep** if repeated-mistake avoidance ("last time the build failed because…") proves to be the dominant failure mode.
 
 ## Minimal recommended starting set
-Unity 6 + official Unity MCP + Hermes native role-agents + `git worktree` + Linear MCP + OpenViking (team) + **Scenario (sprites) + TexturePacker** + **batchmode build (→ GameCI for L3/L4)** + **emulator/adb + PlayMode tests + Unity Recorder + LLM judge**. Add audio and Firebase Test Lab only after v1 ships.
+Unity 6 + official Unity MCP + Hermes native role-agents + `git worktree` + local `tasks/` board + OpenViking (team) + **Scenario (sprites) + TexturePacker** + **batchmode build (→ GameCI for L3/L4)** + **emulator/adb + PlayMode tests + Unity Recorder + LLM judge**. Add audio and Firebase Test Lab only after v1 ships.
