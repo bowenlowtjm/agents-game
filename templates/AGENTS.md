@@ -8,7 +8,7 @@ Read `$SPEC_REPO/AGENT-BRIEF.md` first.
 A Unity 6 (3D project, 2D-sprite gameplay) Android arcade game. Build it to `spec/GAME-SPEC.md` + `spec/RULESET.md`, to the bar in `spec/ACCEPTANCE.md`.
 
 ## Roles (native Hermes role-agents)
-Orchestrator drives a Think→Plan→Build→Review→Test→Ship→Reflect loop over these agents (defined in the spec `roles/` + harness config): `game-pm`, `game-art`, game-logic, unity-scene, build/ci, test/qa. Parallel work runs in separate `git worktree`s; orchestrator merges green branches only. **No Claude Code / gstack.**
+Orchestrator drives a Think→Plan→Build→Review→Test→Ship→Reflect loop over these agents (defined in the spec `roles/` + harness config): `game-pm`, `game-art`, game-logic, unity-scene, build/ci, test-author, and **`qa`** (independent gate). Parallel work runs in separate `git worktree`s; on every major push the **`qa` role** verifies errors + playability and the orchestrator merges only on QA PASS + green CI. **No Claude Code / gstack.**
 
 ## Conventions (enforce)
 - All game code+assets under `Assets/_Game/`. One asmdef: `Pully.Game`.

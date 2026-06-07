@@ -18,12 +18,18 @@ One capable agent, full toolset (Unity MCP + build + git + Linear + Discord + fl
                          └─────┬───────┬───────┬─────┘
         ┌──────────────┬───────┘       │       └────────┬───────────────┐
         ▼              ▼               ▼                ▼               ▼
-   Game-Logic     Unity-Scene      Game Art         Build/CI        Test/QA
-   (C# systems)   (scenes,prefabs  (sprites +       (batchmode APK, (tests +
-                   via Unity MCP)   atlas import)    install)        gesture sim +
-                                                                     gameplay judge)
+   Game-Logic     Unity-Scene      Game Art         Build/CI        Test author
+   (C# systems)   (scenes,prefabs  (sprites +       (batchmode APK, (writes Edit/
+                   via Unity MCP)   atlas import)    install)        PlayMode tests)
+        └──────────────┴───────────────┴────────────────┴───────┬───────┘
+                                                                 ▼
+                                          ┌──────────────────────────────────┐
+                                          │  QA — independent gate            │  every major
+                                          │  errors (compile/CI/console) +    │  push: sign
+                                          │  playability (bot/smoke/feel)     │  off or block
+                                          └──────────────────────────────────┘
 ```
-Each box is a Hermes agent (prompt + tools). They run in parallel git worktrees; the orchestrator merges green branches only.
+Each box is a Hermes agent (prompt + tools). Workers run in parallel git worktrees; **QA gates every major push** (PR to main / milestone) and the orchestrator merges only on a QA **PASS** + green CI.
 
 ### Roles (Hermes agents)
 | Role | Defined in | Owns |
@@ -34,7 +40,8 @@ Each box is a Hermes agent (prompt + tools). They run in parallel git worktrees;
 | **Unity-Scene worker** | role prompt (Unity MCP) | scenes, prefabs, HUD wiring, references |
 | **Game Art** *(custom)* | `roles/game-art.SKILL.md` | 2D sprite generation, palette/style (`DESIGN.md`), atlas packing, Unity import |
 | **Build/CI worker** | role prompt | `Builder.cs`, batchmode/GameCI APK, install |
-| **Test/QA worker** | role prompt | EditMode+PlayMode tests, gesture sim, **gameplay-quality measurement** |
+| **Test author** | role prompt | writes EditMode+PlayMode tests alongside features; gesture sim; **gameplay-quality harness** (bot player, recorder, judge) |
+| **QA — independent gate** *(verifier)* | `roles/qa.SKILL.md` | on **every major push**: errors (compile/CI/console) + playability (bot, smoke playthrough, feel); **signs off or blocks** the merge |
 
 ### The two custom agents (the new asks)
 - **Game PM** — the product brain. Reads [Game Brief](02-Game-Design-Brief.md), writes the `SAA` backlog in Linear, sequences milestones, and is the *only* role allowed to declare a feature "fun enough." At L1 it proposes and a human ratifies; at L3/L4 it decides alone and logs rationale. Frames the work as "find the 10-star product hiding in the request."
@@ -66,10 +73,11 @@ Tiers (independent of backend):
 ## Handoff protocol
 - Each role returns a structured result: `{ linear_issue, changed_files, tests_run, pass/fail, stubs, next_blockers }`.
 - Orchestrator never trusts "done" without an artifact (clean console, passing test, APK path, atlas file).
-- All work on branches in **git worktrees**; orchestrator merges only green; PR + branch link back to `SAA-###`.
+- All work on branches in **git worktrees**; on a major push the **QA gate** runs (errors + playability); orchestrator merges only on QA **PASS** + green CI; PR + branch link back to `SAA-###`.
+- **Separation of duties:** the QA agent is *not* the agent that wrote the code (nor the Test author). Independent verification is the point — it's the main defense against "marks its own work done." In **solo config (A)** there's no second agent, so the lone agent runs the QA checklist itself before declaring done (weaker, by design — part of what A-vs-B measures).
 
 ## Linear (SAA) flow
-`Game PM creates SAA-### → orchestrator pulls → worker In Progress → Test/QA In Review → Build/CI ships → Done`. **Who may move an issue to Done is the autonomy knob** (see [Autonomy Ladder](05-Autonomy-Ladder.md)).
+`Game PM creates SAA-### → orchestrator pulls → worker In Progress → **QA gate** (In Review) → Build/CI ships → Done`. **Who may move an issue to Done is the autonomy knob** (see [Autonomy Ladder](05-Autonomy-Ladder.md)); QA PASS is the precondition.
 
 ## Model placement to test (phased)
 **Start Kimi-only; swap in Codex later.** Phase 1 establishes a clean baseline on a single model before adding the model variable.

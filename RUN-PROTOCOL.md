@@ -35,7 +35,7 @@ VIKING_NAMESPACE: viking://runs/<RUN_ID>/             # Config B team memory; om
 - Memory: use `MEMORY` backend; seed `DESIGN.md` with `ART_STYLE` (or mark AGENT-DECIDES at L4).
 
 ## Step 2 — Build to the milestones (test-driven, PR-gated)
-Work feature-branch → PR → `ci.yml` green → merge. Add EditMode unit tests + PlayMode integration tests alongside each feature ([Testing & CI/CD](10-Testing-and-CICD.md)). Follow the milestone order (mirrors [../08-Roadmap](08-Roadmap.md)):
+Work feature-branch → PR → `ci.yml` green → **QA gate** (team config: the independent [`qa`](roles/qa.SKILL.md) role verifies errors + playability on every major push) → merge on QA PASS. Add EditMode unit tests + PlayMode integration tests alongside each feature ([Testing & CI/CD](10-Testing-and-CICD.md)). Follow the milestone order (mirrors [../08-Roadmap](08-Roadmap.md)):
 - **M1** core loop (input → gesture recognition → ruleset → scoring/combo), procedural placeholder targets, seeded RNG; **unit tests** for scoring/combo/gesture/determinism, one **PlayMode** input→score test.
 - **M2** menus + HUD + high score + **Game Art** sprites/atlas + juice; **APK that installs** (via `build.yml` artifact); integration tests for lives/timer/game-over.
 - **M3** balance, robustness, gameplay-quality harness (bot player + recorder + judge); determinism replay test.

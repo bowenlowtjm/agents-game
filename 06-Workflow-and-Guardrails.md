@@ -6,7 +6,7 @@ How a run actually executes, and what keeps an unattended run safe and honest.
 1. **Plan** — orchestrator reads brief + `GOTCHAS.md`, emits a task list.
 2. **Implement** — worker edits code / drives Unity MCP on a branch.
 3. **Verify** — after each C# edit run `scripts/unity-check.sh` (headless refresh + compile + read errors, no Editor focus needed) until CLEAN; then run tests, check console, attempt build.
-4. **Gate** — open a PR; orchestrator merges only when **`ci.yml` is green** (EditMode+PlayMode via GameCI); else loops back with the failure. See [Testing & CI/CD](10-Testing-and-CICD.md).
+4. **Gate** — open a PR. On every major push the **independent QA role** runs ([roles/qa](roles/qa.SKILL.md)): errors (compile/CI/console) + playability (bot run, smoke playthrough, feel). Orchestrator merges only on **QA PASS + green `ci.yml`**; else QA bounces it back with the failing check. (Solo config: the lone agent runs the QA checklist itself.)
 5. **Record** — append to `run-log.md`; promote any new trap to `GOTCHAS.md`; log decisions in `docs/decisions.md`. **At milestone checkpoints / major architectural forks,** promote significant architectural decisions into formal ADRs in `adr/` (see [ADR Process](12-ADR-Process.md)).
 6. **Broadcast** — if the change is *significant* (milestone, issue→Done, build produced, decision logged, escalation), post to Discord (see [Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)): post-only webhook at L3/L4, two-way channel at L1.
 
