@@ -19,7 +19,7 @@ Goal: prove the plumbing before testing autonomy.
 - Ruleset ScriptableObject + scoring + combo.
 - One game scene, targets spawn (procedural shapes/colors placeholders), seeded RNG.
 - EditMode unit tests (scoring/combo, gesture classification, ruleset, determinism); PlayMode integration test (input→score).
-- **Exit:** core loop playable in Editor; `ci.yml` green on the PR; issues moved through `SAA` board.
+- **Exit:** core loop playable in Editor; `ci.yml` green on the PR; issues moved through `SAA` board; **ADR pass** in `adr/` for the core-loop architecture (ruleset data model, gesture recognition, seeded spawn) — see [ADR Process](12-ADR-Process.md).
 
 ## M2 — Playable build + art pass
 - Main menu + game-over screens; HUD (score/combo/timer).
@@ -27,13 +27,13 @@ Goal: prove the plumbing before testing autonomy.
 - Local high score persistence.
 - Minimal juice (hit pop, miss flash, score tween).
 - Android debug APK installs + launches on device/emulator.
-- **Exit:** [Charter DoD](01-Experiment-Charter.md#definition-of-done-per-run) met.
+- **Exit:** [Charter DoD](01-Experiment-Charter.md#definition-of-done-per-run) met; **ADR pass** for scene/prefab structure, art/atlas pipeline, and persistence.
 
 ## M3 — Balance, robustness & gameplay-quality harness
 - Tune ruleset (reward/penalty), edge-input handling, no softlocks.
 - Stand up the **bot player + Unity Recorder + LLM judge** (see [Metrics §C](07-Metrics-and-Evaluation.md#c-gameplay-quality-the-new-headline-metric)).
 - Full test pass; deterministic replay of a seeded session.
-- **Exit:** Code-quality B ≥ 11/15 **and** Gameplay-quality ≥ 6/10 (PM bar).
+- **Exit:** Code-quality B ≥ 11/15 **and** Gameplay-quality ≥ 6/10 (PM bar); **ADR pass** for determinism/replay + balance config; `adr/` set is complete and ordered by blast radius.
 
 ## M4 — Autonomy stress tests
 Run the [Autonomy Ladder](05-Autonomy-Ladder.md) **3×2 grid** (Config A solo vs B Hermes role-team × **L1 / L3 / L4**, memory on/off optional). Then optional stretch:

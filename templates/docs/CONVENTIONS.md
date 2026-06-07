@@ -27,3 +27,4 @@ Read before writing code. Keep edits consistent with these.
 - Branch per issue (`feature/SAA-###-…`); PR links `SAA-###`; **merge only when `ci.yml` is green**.
 - `build.yml` (on `main`) produces the APK artifact; `Editor/Builder.cs` is for local batchmode only — never pass it as GameCI `buildMethod`.
 - Append `run-log.md` + post Discord (incl. CI status) on every significant change.
+- Log decisions in `docs/decisions.md`; at milestone checkpoints / major architectural forks, promote significant ones to formal ADRs in `adr/` (`$SPEC_REPO/12-ADR-Process.md`).

@@ -7,7 +7,7 @@ How a run actually executes, and what keeps an unattended run safe and honest.
 2. **Implement** — worker edits code / drives Unity MCP on a branch.
 3. **Verify** — after each C# edit run `scripts/unity-check.sh` (headless refresh + compile + read errors, no Editor focus needed) until CLEAN; then run tests, check console, attempt build.
 4. **Gate** — open a PR; orchestrator merges only when **`ci.yml` is green** (EditMode+PlayMode via GameCI); else loops back with the failure. See [Testing & CI/CD](10-Testing-and-CICD.md).
-5. **Record** — append to `run-log.md`; promote any new trap to `GOTCHAS.md`.
+5. **Record** — append to `run-log.md`; promote any new trap to `GOTCHAS.md`; log decisions in `docs/decisions.md`. **At milestone checkpoints / major architectural forks,** promote significant architectural decisions into formal ADRs in `adr/` (see [ADR Process](12-ADR-Process.md)).
 6. **Broadcast** — if the change is *significant* (milestone, issue→Done, build produced, decision logged, escalation), post to Discord (see [Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)): post-only webhook at L3/L4, two-way channel at L1.
 
 Verification is non-negotiable: **"done" must come with an artifact** (clean console, passing test, APK path). This is what prevents the over-claiming failure mode at high autonomy.

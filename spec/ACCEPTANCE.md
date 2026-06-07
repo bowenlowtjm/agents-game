@@ -13,6 +13,7 @@ A run is acceptable only when **all gates pass** and the quality bars are met. V
 - [ ] **Build artifact:** `build.yml` produced an Android APK artifact on `main`.
 - [ ] **Game Art** pass done: generated 2D sprites + packed atlas, palette consistent with `DESIGN.md`.
 - [ ] `docs/run-log.md` final entry written; Linear `SAA` board matches reality (no fake Done).
+- [ ] **`adr/` ADRs written** for the significant architectural decisions (per [ADR Process](../12-ADR-Process.md)), ordered by blast radius.
 - [ ] Self-report lists what's built, what's stubbed, known issues — **honestly**.
 
 ## Code-quality bar (score /15, target ≥ 11) — see [../07-Metrics](07-Metrics-and-Evaluation.md#b-code-quality-03-each)

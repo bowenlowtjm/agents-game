@@ -41,6 +41,8 @@ Work feature-branch → PR → `ci.yml` green → merge. Add EditMode unit tests
 - **M3** balance, robustness, gameplay-quality harness (bot player + recorder + judge); determinism replay test.
 Each significant change (incl. **CI green/red**) → Discord (post-only L3/L4, two-way L1) + append `docs/run-log.md`.
 
+**At each milestone checkpoint (M1/M2/M3 exit + any major architectural fork):** write/refresh formal ADRs in `adr/` for the significant architectural decisions made since the last checkpoint — follow `$SPEC_REPO/12-ADR-Process.md`, promoting them from the `docs/decisions.md` running log. Post the `adr/` summary to Discord.
+
 ## Step 3 — Acceptance & record
 - Verify against `spec/ACCEPTANCE.md` (every gate + quality bars).
 - Write the final entry in `docs/run-log.md` using the template there (outcome, interventions, code/15, gameplay/10, time, tokens, bottleneck, new gotchas).
