@@ -47,7 +47,18 @@ The role layer (orchestrator + game-pm + game-art + eng/qa/release) runs as **na
 | ⚪ Android **release** keystore + passwords | `ANDROID_KEYSTORE*` | you generate | **debug builds need none** — spec is debug-only, skip for v1 |
 
 ## 8. Memory — team run (🟡 — OpenViking, replaces GBrain)
-Solo run = flat `docs/` (✅ no cred). Team run = **OpenViking** (`viking://` filesystem context DB, self-hosted):
+Solo run = flat `docs/` (✅ no cred). Team run = **OpenViking** (`viking://` filesystem context DB, self-hosted).
+
+> **Install gotcha — needs Python ≥ 3.10.** Bare `pip3` may point at an old interpreter (e.g. macOS Python 3.9) even when `python3` is newer → `No matching distribution found for openviking`. Install into an isolated 3.11 venv with `uv`:
+> ```bash
+> uv venv --python 3.11 ~/.venvs/openviking
+> uv pip install --python ~/.venvs/openviking/bin/python openviking
+> ~/.venvs/openviking/bin/openviking language en          # one-time
+> ~/.venvs/openviking/bin/openviking-server --host 127.0.0.1 --port 8080   # -> VIKING_ENDPOINT
+> ```
+> CLIs provided: `openviking` (aka `ov`), `openviking-server`, `vikingbot`. The `litellm`/`botocore` warnings on start are benign (optional Bedrock/SageMaker support). Verified with openviking 0.3.24 on Python 3.11.14.
+
+
 | Item | Var | Notes |
 |------|-----|-------|
 | 🟡 OpenViking server endpoint | `VIKING_ENDPOINT` | self-host the OSS server (Docker/OpenShift); local = ✅ no key |

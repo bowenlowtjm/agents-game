@@ -1,4 +1,4 @@
-# Experiment Charter
+                                                          # Experiment Charter
 
 ## Why
 Test new agentic tools & concepts on a *real, bounded* deliverable. A mobile game is ideal: it has code, assets, UI, build/packaging, and a clear "does it run and feel good" success bar. Small enough to finish, rich enough to stress an agent team.
