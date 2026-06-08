@@ -29,19 +29,20 @@ One capable agent, full toolset (Unity MCP + build + git + `tasks/` board + Disc
                                           │  playability (bot/smoke/feel)     │  off or block
                                           └──────────────────────────────────┘
 ```
-Each box is a Hermes agent (prompt + tools). Workers run in parallel git worktrees; **QA gates every major push** (PR to main / milestone) and the orchestrator merges only on a QA **PASS** + green CI.
+Each box is a Hermes agent (prompt + tools). Workers run in parallel git worktrees. **Two gates, different lenses:** the **Staff Engineer** reviews+fixes the diff *before every major commit* (white-box code quality/correctness), then the **QA gate** verifies *every major push* (black-box playability/errors). Sequence: `worker → staff-engineer (pre-commit) → commit/push → QA (pre-merge) → merge`. The orchestrator merges only on QA **PASS** + green CI.
 
 ### Roles (Hermes agents)
-| Role | Defined in | Owns |
-|------|-----------|------|
-| **Game Product Manager** *(custom)* | `roles/game-pm.SKILL.md` | Brief→`tasks/` board, prioritization, the *fun/10-star* product calls, accept/reject features, **gameplay-quality bar** |
-| **Orchestrator** | harness config | decompose, sequence, gate merges, maintain memory |
-| **Game-Logic worker** | role prompt | scoring, combo, ruleset SO, input→gesture recognition |
-| **Unity-Scene worker** | role prompt (Unity MCP) | scenes, prefabs, HUD wiring, references |
-| **Game Art** *(custom)* | `roles/game-art.SKILL.md` | 2D sprite generation, palette/style (`DESIGN.md`), atlas packing, Unity import |
-| **Build/CI worker** | role prompt | `Builder.cs`, batchmode/GameCI APK, install |
-| **Test author** | role prompt | writes EditMode+PlayMode tests alongside features; gesture sim; **gameplay-quality harness** (bot player, recorder, judge) |
-| **QA — independent gate** *(verifier)* | `roles/qa.SKILL.md` | on **every major push**: errors (compile/CI/console) + playability (bot, smoke playthrough, feel); **signs off or blocks** the merge |
+| Role                                       | Defined in                | Owns                                                                                                                                 |
+| ------------------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Senior Game Product Manager** *(custom)* | `roles/game-pm.SKILL.md`  | Brief→`tasks/` board, prioritization, the *fun/10-star* product calls, accept/reject features, **gameplay-quality bar**              |
+| **Orchestrator**                           | harness config            | decompose, sequence, gate merges, maintain memory                                                                                    |
+| **Game-Logic worker**                      | role prompt               | scoring, combo, ruleset SO, input→gesture recognition                                                                                |
+| **Unity-Scene worker**                     | role prompt (Unity MCP)   | scenes, prefabs, HUD wiring, references                                                                                              |
+| **Game Art** *(custom)*                    | `roles/game-art.SKILL.md` | 2D sprite generation, palette/style (`DESIGN.md`), atlas packing, Unity import                                                       |
+| **Build/CI worker**                        | role prompt               | `Builder.cs`, batchmode/GameCI APK, install                                                                                          |
+| **Test author**                            | role prompt               | writes EditMode+PlayMode tests alongside features; gesture sim; **gameplay-quality harness** (bot player, recorder, judge)           |
+| **Staff Engineer — tech lead** *(custom)*  | `roles/staff-engineer.SKILL.md` | **pre-commit, white-box gate**: before every major commit, reviews AND **fixes** the diff for correctness/clean-code, enforces [`code-conventions`](roles/code-conventions.SKILL.md), leaves it compiling + green |
+| **QA — independent gate** *(verifier)*     | `roles/qa.SKILL.md`       | **pre-merge, black-box gate**: on every major push, errors (compile/CI/console) + playability (bot, smoke playthrough, feel); **signs off or blocks** the merge |
 
 ### The two custom agents (the new asks)
 - **Game PM** — the product brain. Reads [Game Brief](02-Game-Design-Brief.md), writes the backlog as `tasks/T###-*.md` files (+ keeps `tasks/BOARD.md` in sync), sequences milestones, and is the *only* role allowed to declare a feature "fun enough." At L1 it proposes and a human ratifies; at L3/L4 it decides alone and logs rationale. Frames the work as "find the 10-star product hiding in the request."

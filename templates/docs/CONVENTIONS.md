@@ -1,6 +1,6 @@
 # CONVENTIONS.md
 
-Read before writing code. Keep edits consistent with these.
+Read before writing code. Keep edits consistent with these. **Canonical source:** `$SPEC_REPO/roles/code-conventions.SKILL.md` (enforced by the **Staff Engineer** before every major commit); this file is the run-repo quick reference.
 
 ## Project
 - Unity 6 LTS, 3D project, 2D-sprite gameplay (ortho/shallow-perspective camera), portrait.

@@ -13,7 +13,7 @@ Create a new git repo for this run, scaffold a Unity project from `templates/`, 
 2. **[spec/GAME-SPEC.md](spec/GAME-SPEC.md)** — the authoritative game definition (what to build).
 3. **[spec/RULESET.md](spec/RULESET.md)** — the exact target→gesture→score data.
 4. **[spec/ACCEPTANCE.md](spec/ACCEPTANCE.md)** — definition of done + code & gameplay quality bars.
-5. **[roles/](roles/)** — install `game-pm.SKILL.md`, `game-art.SKILL.md`, and `qa.SKILL.md` (the independent QA gate) as skills (if running the team config).
+5. **[roles/](roles/)** — install `game-pm.SKILL.md`, `game-art.SKILL.md`, `staff-engineer.SKILL.md` (pre-commit code gate), and `qa.SKILL.md` (pre-merge gate) as skills; all coding roles load `code-conventions.SKILL.md` (team config).
 
 ## Scaffold payload (copy into the new repo)
 Everything under **[templates/](templates/)** is copied verbatim into the new repo and then filled in:
