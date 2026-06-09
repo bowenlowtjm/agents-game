@@ -35,15 +35,20 @@ asmdefs reference `Pully.Game` + `UnityEngine.TestRunner`/`UnityEditor.TestRunne
 ## CI/CD pipeline (GitHub Actions + GameCI)
 Two workflows ship in `templates/.github/workflows/`:
 
-| Workflow | Trigger | Does |
-|----------|---------|------|
-| **`ci.yml`** | every push to `feature/**` + every PR to `main` | runs **EditMode + PlayMode** tests via `game-ci/unity-test-runner`; uploads results + coverage; **PR can't merge red** |
-| **`build.yml`** | push to `main` + manual `workflow_dispatch` | builds the **Android APK** via `game-ci/unity-builder`; uploads the APK as an artifact |
+> **CI is the pre-merge gate, NOT the inner loop.** The agent compile-checks **locally** every edit via `scripts/unity-check.sh` (seconds, no Docker pull). Waiting on cloud CI per edit is minutes of image-pull + asset import — don't. CI runs to confirm green before merge. The codex run got slow precisely by leaning on CI as its inner loop.
 
-Both cache the Unity `Library/` folder for speed and require the Unity license secrets (see [SETUP-CREDENTIALS §7](SETUP-CREDENTIALS.md#7-build--ci-)): `UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`.
+| Workflow | Trigger | Does | Cost |
+|----------|---------|------|------|
+| **`ci.yml` — EditMode** | every push to `feature/**` | EditMode (unit) tests via `game-ci/unity-test-runner` (compiles the code too) | **light** — base editor image, no PlayMode/Android |
+| **`ci.yml` — PlayMode** | PR to `main` (+ dispatch) | adds the slower PlayMode pass | full |
+| **`build.yml`** | push to `main` (+ dispatch) | Android APK via `game-ci/unity-builder` | **heavy** — Android NDK image; never on feature pushes |
+
+Light-per-push / heavy-on-main keeps the feature loop cheap and reserves the slow Android build for milestones. All cache the Unity `Library/` folder (first run is cold + pulls a multi-GB image — *that's* the one-time slow run; subsequent runs are far faster), and require the license secrets (see [SETUP-CREDENTIALS §7](SETUP-CREDENTIALS.md#7-build--ci-)): `UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`.
+
+**Anti-patterns (these made the codex CI take forever):** validating compilation with the **Android builder image** (use EditMode / a Linux target — no NDK needed to compile); running **PlayMode + Android build on every feature push**; and **two overlapping workflows** firing per push. Don't.
 
 ### Pipeline gates
-1. **Open PR** → `ci.yml` runs all tests. Red = blocked. Orchestrator merges only green (mirrors the [Workflow](06-Workflow-and-Guardrails.md) "verify with an artifact" rule).
+1. **Feature push** → EditMode (fast). **Open PR** → EditMode + PlayMode. Red = blocked; orchestrator merges only green (mirrors the [Workflow](06-Workflow-and-Guardrails.md) "verify with an artifact" rule).
 2. **Merge to `main`** → `build.yml` produces the APK artifact = the shippable build for that milestone.
 3. CI status is a **significant change** → post to Discord per rung (green/red + run URL).
 
