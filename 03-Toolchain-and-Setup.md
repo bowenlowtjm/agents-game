@@ -45,7 +45,8 @@ The agent runs `unity-check.sh` after writing code and **before** running tests;
 **Discord (human↔agent comms):** two mechanisms, chosen by autonomy rung (see [Autonomy Ladder › Communication](05-Autonomy-Ladder.md#communication-per-rung)):
 - **Post-only (L3/L4)** — a **Discord webhook**. The agent broadcasts *significant changes* to a feed channel; no read-back. Zero-infra, fire-and-forget.
 - **Two-way channel (L1)** — a **Discord bot / Discord MCP** the agent can both post to *and read replies from* — questions, approvals, design answers flow back in-channel.
-- **"Significant change"** = milestone reached, task→done, build produced (APK path), a logged decision, or a blocker/escalation. Each post links the `T###` task + commit.
+- **"Significant change"** = milestone reached, task→done, build produced (APK path), a logged decision, or a blocker/escalation. Each post links the `T###` task + commit. Per-run posts go to the run's own channel.
+- **`#hermes-update`** — the Hermes agent's **harness-level update channel** (`HERMES_UPDATE_CHANNEL`): run start/finish, outcomes + quality scores, grid status, launcher/infra errors — the cross-run roll-up. See [Parallel Runs](11-Parallel-Runs.md#discord-disambiguation--decided-channel-per-run).
 
 ## Layer 5 — Memory & knowledge
 Backend is **paired to the config** (decided — see [Architecture › Memory](04-Agent-Team-Architecture.md#memory)):
@@ -78,7 +79,7 @@ pully/
 - [ ] Unity MCP connected to Hermes; smoke-test "read console" + "create scene"
 - [ ] Headless error check works: `scripts/unity-check.sh` reports a deliberately-broken `.cs` as an error, then CLEAN once fixed — no manual Editor focus
 - [ ] `tasks/` board scaffolded; PM agent can create a `T###` task file and update its `status:`
-- [ ] Discord set up: **webhook** (post-only feed, L3/L4) + **bot/MCP** (two-way, L1); agent posts a test "significant change"
+- [ ] Discord set up: per-run **webhook** (post-only feed, L3/L4) + **bot/MCP** (two-way, L1) + **`#hermes-update`** channel (`HERMES_UPDATE_CHANNEL`); agent posts a test "significant change" and a test harness update
 - [ ] `Builder.cs` batchmode → debug APK *by hand* once (baseline path)
 - [ ] GitHub repo + `UNITY_*` secrets; `ci.yml` green on sample tests; `build.yml` yields an APK artifact (see [Testing & CI/CD](10-Testing-and-CICD.md))
 - [ ] Memory ready: flat `docs/` (solo) **/** OpenViking server up + seeded (team)

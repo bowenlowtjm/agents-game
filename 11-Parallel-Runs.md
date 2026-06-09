@@ -23,22 +23,26 @@ A thin launcher starts each run and records it in a **registry**:
 2. Start Unity + MCP on a free `UNITY_MCP_PORT`.
 3. Assign the Discord target + Viking namespace (tasks are local per-repo — nothing to assign).
 4. Hand the agent its run-parameter block; launch.
+5. Post to **`#hermes-update`** (`HERMES_UPDATE_CHANNEL`): "started `<RUN_ID>`"; post again on completion with the outcome + quality scores.
 
 Keep a registry mapping `RUN_ID ↔ repo ↔ UNITY_MCP_PORT ↔ PULLY_REFRESH_PORT ↔ discord-target` (a simple `runs/registry.md`). The launcher must allocate unique ports and Discord targets so two runs never share.
 
 ## Discord disambiguation — DECIDED: channel-per-run
-A **"Pully Experiments" category** with **one channel named `<RUN_ID>`** per run, plus a `#pully-control` channel for cross-run roll-ups. Each run → its own webhook (L3/L4) or the shared bot scoped to that channel (L1). Clean, skimmable, and one channel = one run's full history.
+A **"Pully Experiments" category** with **one channel named `<RUN_ID>`** per run, plus **`#hermes-update`** — the **Hermes agent's update channel** (harness-level, cross-run). Each run → its own webhook (L3/L4) or the shared bot scoped to that channel (L1). Clean, skimmable, and one channel = one run's full history.
 
 ```
 Pully Experiments/
-  #pully-control            <- launcher posts grid status, cross-run summaries
-  #pully-a-l1-20260606      <- one channel per RUN_ID
+  #hermes-update            <- Hermes posts harness-level updates: run start/finish,
+                               grid status, cross-run summaries, launcher errors
+  #pully-a-l1-20260606      <- one channel per RUN_ID (the run's own feed)
   #pully-b-l3-20260606
   #pully-b-l4-20260606
   …
 ```
 
-**Always:** prefix every message `[RUN_ID]`, set webhook `username=<RUN_ID>`, and store the channel id in `DISCORD_TARGET`.
+**`#hermes-update` (the update channel):** the Hermes harness/launcher posts here — when a run is spawned, when it completes (with its outcome + quality scores), grid progress, and any launcher/infra errors. Per-task significant changes still go to the run's own channel; `#hermes-update` is the roll-up you watch to track all runs at a glance. Set its webhook/id in `HERMES_UPDATE_CHANNEL`.
+
+**Always:** prefix every message `[RUN_ID]`, set webhook `username=<RUN_ID>`, and store the per-run channel id in `DISCORD_TARGET`.
 
 *Alternatives (not chosen):* thread-per-run (one parent channel, webhook `?thread_id=`) or forum-per-run (webhook `thread_name`) — use only if channel sprawl becomes a problem.
 

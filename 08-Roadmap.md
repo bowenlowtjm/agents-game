@@ -7,7 +7,7 @@ Goal: prove the plumbing before testing autonomy.
 - Unity 6 LTS + Android module; empty **3D** project committed.
 - Hermes role-agents defined in `roles/`; `AGENTS.md` manifest; **Game PM** + **Game Art** wired; `git worktree` parallelism ready.
 - Unity MCP connected to Hermes; smoke-test scene create + console read; **`tasks/` board** scaffolded (create a `T###` task file + update its status).
-- **Discord** wired: webhook (post-only feed for L3/L4) + bot/MCP (two-way channel for L1); agent posts a test significant-change.
+- **Discord** wired: per-run webhook (post-only feed for L3/L4) + bot/MCP (two-way channel for L1) + **`#hermes-update`** (harness-level update channel, `HERMES_UPDATE_CHANNEL`); agent posts a test significant-change + a test harness update.
 - `Builder.cs` batchmode → debug APK *by hand* once (baseline path exists).
 - **CI live:** push scaffold to GitHub, add `UNITY_*` secrets, confirm `ci.yml` green on the sample tests and `build.yml` produces an APK artifact ([Testing & CI/CD](10-Testing-and-CICD.md)).
 - Memory ready: flat `docs/` (solo) or OpenViking server (team), seeded; `DESIGN.md` started.

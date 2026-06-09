@@ -29,6 +29,7 @@ Coordination is local markdown (`tasks/T###-*.md` + `BOARD.md`) committed with t
 | 🟡 Webhook URL | `DISCORD_WEBHOOK_URL` | Channel → Integrations → Webhooks | **L3/L4** post-only feed (no app). **One per run** if running in parallel — see [Parallel Runs](11-Parallel-Runs.md) |
 | 🟡 Bot token | `DISCORD_BOT_TOKEN` | Discord Developer Portal → app → Bot | **L1** two-way. One bot can serve many runs, routing by `channel_id` |
 | 🟡 (bot) Message Content intent + invite | — | Dev Portal → Bot → intents; OAuth invite | required for the bot to read replies |
+| 🟡 Hermes update channel | `HERMES_UPDATE_CHANNEL` | a webhook for **`#hermes-update`** | harness-level feed: run start/finish, grid status, launcher errors (cross-run). See [Parallel Runs](11-Parallel-Runs.md#discord-disambiguation--decided-channel-per-run) |
 
 ## 6. Art generation — Game Art agent (🟡, from M2)
 | Cred | Var | Where | Notes |
@@ -92,6 +93,7 @@ UNITY_LICENSE=            # contents of the .ulf, or use serial
 # Discord (L3/L4 webhook; L1 bot)
 DISCORD_WEBHOOK_URL=
 DISCORD_BOT_TOKEN=
+HERMES_UPDATE_CHANNEL=    # webhook for #hermes-update (harness-level run feed)
 
 # Art gen (M2; pick one)
 SCENARIO_API_KEY=
