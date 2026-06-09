@@ -19,7 +19,7 @@ Running the [Autonomy Ladder](05-Autonomy-Ladder.md) 3×2 grid (and model phases
 
 ## Orchestration (meta-launcher)
 A thin launcher starts each run and records it in a **registry**:
-1. Scaffold the run repo from `$SPEC_REPO/templates/` (per [RUN-PROTOCOL](RUN-PROTOCOL.md)).
+1. Scaffold the run repo from `$SPEC_REPO/templates/` (per [RUN-PROTOCOL](RUN-PROTOCOL.md)); push Unity CI secrets to it via `scripts/push-unity-secrets.sh <repo>` (or once org-wide — see [SETUP-CREDENTIALS §7](SETUP-CREDENTIALS.md#7-build--ci-)).
 2. Start Unity + MCP on a free `UNITY_MCP_PORT`.
 3. Assign the Discord target + Viking namespace (tasks are local per-repo — nothing to assign).
 4. Hand the agent its run-parameter block; launch.

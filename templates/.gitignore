@@ -23,5 +23,14 @@
 *.sln
 *.user
 
-# Keep these (commit): Assets/, Packages/, ProjectSettings/, all .meta files, docs/, CLAUDE.md, DESIGN.md
+# Secrets — NEVER commit (values live in ~/.config/pully, outside git)
+.env
+.env.*
+*.ulf
+*.alf
+secrets.env
+*.keystore
+*.jks
+
+# Keep these (commit): Assets/, Packages/, ProjectSettings/, all .meta files, docs/, AGENTS.md, DESIGN.md, tasks/, adr/
 !*.meta

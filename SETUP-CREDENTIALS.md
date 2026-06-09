@@ -42,7 +42,20 @@ Coordination is local markdown (`tasks/T###-*.md` + `BOARD.md`) committed with t
 |------|-----|-------|-------|
 | 🟡 GitHub account + repo | — | github.com | per-run repos, PRs |
 | 🟡 GitHub PAT | `GITHUB_TOKEN` | GitHub → Settings → Developer settings | only if agents push/PR |
-| 🟡 Unity license secrets (GameCI) | (as §3) | GH Actions secrets | unattended cloud builds at L3/L4 |
+| 🟡 Unity license secrets (GameCI) | `UNITY_LICENSE`,`UNITY_EMAIL`,`UNITY_PASSWORD` | GH Actions secrets (per repo) | required for *any* GameCI job (tests + builds) |
+
+### Unity secrets are PER-REPO — automate with the local store
+GitHub Actions secrets don't cross repositories, so **every run repo** needs `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD` or GameCI fails with *"No valid license activation strategy."* Don't paste them per repo by hand, and **never commit them**:
+
+- **Real values live OUTSIDE git** at `~/.config/pully/` (chmod 600): `secrets.env` (email/password) + `unity.ulf` (the license file). Gitignored everywhere (`.env`, `*.ulf`, `*.alf`, `secrets.env`) as defense-in-depth.
+- **A future agent uploads them itself** via the committed helper (no values in it):
+  ```bash
+  scripts/push-unity-secrets.sh bowenlowtjm/<run-repo>   # one repo, before its first CI run
+  scripts/push-unity-secrets.sh --org bowenlowtjm        # org-wide once → all repos inherit (preferred)
+  ```
+  Requires `gh` (`brew install gh && gh auth login`).
+- **`UNITY_LICENSE` = the full `.ulf` contents.** For Unity **Personal** the local `~/.config/pully/unity.ulf` (copied from `/Library/Application Support/Unity/Unity_lic.ulf`) usually works on GameCI; if activation still fails, generate a CI-specific one via the repo's `activate.yml` workflow (request `.alf` → activate at license.unity3d.com → save the returned `.ulf`).
+- **Workflow must pass them in `env:`** — `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD`, **not** `UNITY_SERIAL` (serial is the *Pro* path; a Personal `.ulf` will never activate via serial).
 | ⚪ Android **release** keystore + passwords | `ANDROID_KEYSTORE*` | you generate | **debug builds need none** — spec is debug-only, skip for v1 |
 
 ## 8. Memory — team run (🟡 — OpenViking, replaces GBrain)
