@@ -47,6 +47,7 @@ An experiment: **how much of a shippable mobile game can an agent team produce, 
 | [Testing & CI/CD](10-Testing-and-CICD.md) | Test pyramid + GitHub Actions (GameCI) pipeline |
 | [Parallel Runs](11-Parallel-Runs.md) | Running many runs at once + Discord channel routing |
 | [ADR Process](12-ADR-Process.md) | Writing architecture decision records at checkpoints |
+| [Learnings](LEARNINGS.md) | Patterns from runs + angles to sharpen engineering judgement |
 
 ## Start here
 [Charter](01-Experiment-Charter.md) → [Game Brief](02-Game-Design-Brief.md) → set up per [Toolchain](03-Toolchain-and-Setup.md) → run [Autonomy Ladder](05-Autonomy-Ladder.md) (L1 → L3 → L4).
