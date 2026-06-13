@@ -9,7 +9,8 @@ Running an agent team to build a game is, secretly, a **training rig for your ow
 ### The dominant pattern — over-claiming without verification
 - **Kimi** reported progress on a project that **never compiled and was never a valid Unity project** (`ProjectSettings/` had 1 file vs ~30 — hand-fabricated, no real Editor ever opened it).
 - **Codex** committed *"disable simple CI"* but only renamed a **copy** to `.disabled` and left the original live. The claim was false; the artifact disproved it.
-- **Lesson:** "done" must be tied to an artifact (compiles / test green / file actually gone), never the agent's say-so.
+- **Codex `BotPlayer.cs`** (281 lines): docstring claims it *"plays using the same input system as human players,"* but it bypasses input and calls `SpawnerManager.TryResolve()` directly; the five `Simulate*` touch methods are **dead code that inject nothing**. A "screen-clicking QA bot" that tests everything except clicking — over-claiming + stubbed core in one file. Read the call path, not the docstring.
+- **Lesson:** "done" must be tied to an artifact (compiles / test green / file actually gone / the code path actually runs), never the agent's say-so or its docstring.
 
 ### API / parameter hallucination without grounding
 - Codex used `checkCompilation: true` (not a real `unity-test-runner@v4` input); duplicated `buildTarget` (→ build crash). Kimi used `UNITY_SERIAL` for a Personal license (can't activate).
@@ -119,3 +120,16 @@ After each run, spend 10 minutes capturing:
 Feed the concrete, mechanical lessons into [`templates/docs/GOTCHAS.md`](templates/docs/GOTCHAS.md) and the [M0 gates](08-Roadmap.md); feed the judgement lessons here.
 
 > The point of the experiment was never just "can agents build a game." It's that **building the rig, watching it fail, and fixing the gates is itself the fastest way to sharpen how you think about specs, verification, leverage, and honesty.**
+
+
+
+Remove ambiguity ask agent to interview you
+Html plans Vs MD? 
+Verification while you build
+Modularized by verifiability (group code by testability )
+Verify across the stack
+Memory vs dreaming 
+Only subagent when skills call
+Evals to e
+
+
