@@ -25,5 +25,9 @@ Everything under **[templates/](templates/)** is copied verbatim into the new re
 - **Respect your autonomy rung** (L1 / L3 / L4) — it controls who decides open questions and how you use Discord. Defined in [RUN-PROTOCOL](RUN-PROTOCOL.md) and [../05-Autonomy-Ladder](05-Autonomy-Ladder.md).
 - **One ruleset, data-driven.** Gesture mapping lives in the ScriptableObject, never hardcoded.
 
+## Documentation output format — HTML
+Generate **human-facing documentation as HTML**, not Markdown (rendered docs, design overviews, reports, any published docs site). Render from Markdown with a real converter (pandoc / markdown-it / python-markdown), wrap in a minimal valid HTML5 document, and rewrite cross-doc links from `*.md` → `*.html`.
+> **Exception (non-negotiable):** `*.SKILL.md`, and the agent-operational files `tasks/`, `docs/decisions|run-log|GOTCHAS|CONVENTIONS`, `adr/` **stay Markdown** — the skill loader requires `.md` + YAML frontmatter, and these are read/written every loop where Markdown is ~2–3× cheaper in tokens and cleaner to diff. Convert *output* docs to HTML; keep *machinery* in Markdown.
+
 ## Context (optional, for the human — the "why")
 The numbered docs `01`–`09` in this folder are the *experiment design* behind this kit. You don't need them to build; read them only if you want the rationale. The files above are all you need to execute a run.
