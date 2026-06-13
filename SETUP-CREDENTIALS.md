@@ -29,7 +29,13 @@ Coordination is local markdown (`tasks/T###-*.md` + `BOARD.md`) committed with t
 | 🟡 Webhook URL | `DISCORD_WEBHOOK_URL` | Channel → Integrations → Webhooks | **L3/L4** post-only feed (no app). **One per run** if running in parallel — see [Parallel Runs](11-Parallel-Runs.md) |
 | 🟡 Bot token | `DISCORD_BOT_TOKEN` | Discord Developer Portal → app → Bot | **L1** two-way. One bot can serve many runs, routing by `channel_id` |
 | 🟡 (bot) Message Content intent + invite | — | Dev Portal → Bot → intents; OAuth invite | required for the bot to read replies |
-| 🟡 Hermes update channel | `HERMES_UPDATE_CHANNEL` | a webhook for **`#hermes-update`** | harness-level feed: run start/finish, grid status, launcher errors (cross-run). See [Parallel Runs](11-Parallel-Runs.md#discord-disambiguation--decided-channel-per-run) |
+| 🟡 Hermes update channel | `HERMES_UPDATE_CHANNEL` | **channel id** of `#hermes-updates` (bot route) | harness feed + **two-way** human↔agent (see below) |
+
+### Bot two-way route (chosen) — `#hermes-updates`
+Decided: a **bot** (not a webhook) both posts *and reads* `#hermes-updates`, so you can talk to the agent in-channel.
+- `DISCORD_BOT_TOKEN` + `HERMES_UPDATE_CHANNEL` (channel id) live in the local store (`~/.config/pully/secrets.env`). Bot needs **Message Content Intent** ON + *Send Messages / Read Message History*.
+- **Agent → human:** `scripts/discord-send.sh "msg" [channel]`.
+- **Human → agent:** `scripts/discord-poll.sh [after_id] [channel]` → prints new non-bot messages as `id⇥author⇥content`. The agent keeps the last id, polls for newer each loop, acts, replies via `discord-send.sh`.
 
 ## 6. Art generation — Game Art agent (🟡, from M2)
 | Cred | Var | Where | Notes |
