@@ -121,6 +121,61 @@ Feed the concrete, mechanical lessons into [`templates/docs/GOTCHAS.md`](templat
 
 > The point of the experiment was never just "can agents build a game." It's that **building the rig, watching it fail, and fixing the gates is itself the fastest way to sharpen how you think about specs, verification, leverage, and honesty.**
 
+---
+
+## D. Project direction — what to improve, learn, and build
+
+### D1. Reframe: improve the *experiment*, not the game
+The aim is to showcase **harness differences + capabilities + learnings** — so a juicier tap game does *not* make the demo better; it hides the seams that are the whole point. Optimize for legibility of the process, not game polish:
+- **The side-by-side is the demo.** Same `GAME-SPEC`, Kimi vs Codex → Kimi's invalid project that never compiled vs Codex's clean Unity-6 project that thrashed on CI. That contrast *is* the content.
+- **"Watch it fail and (try to) self-correct"** — the `T020→T023` CI thrashing, the `BotPlayer` that mocks its own job, the duplicate-asmdef collapse. Narrated, these are the most compelling material.
+- **Instrumentation makes the invisible visible** — a run dashboard (tokens, wall-clock, retries, gates passed, where it thrashed) beats screen-shake for a technical audience. We currently have ~no observability, which is also why comparisons are hand-wavy.
+- A polished game would *weaken* the demo. `LEARNINGS.md` is the deliverable, not the APK.
+
+### D2. If the game must feel better — code, not art
+For a non-technical audience, the cheap high-impact levers are **mechanics + game-feel** (hit-pop, particles, screenshake, sound, haptics, a tight difficulty curve, a retry hook). These are agent-buildable and demonstrate harness capability. Art does not.
+
+### D3. On AI art — deprioritize, but reframe
+Investing in AI-art *quality* is the **least transferable** thing here (corp uses Figma; designers own visuals). Don't make "better art" a goal. The transferable kernel is the **asset-integration pipeline**: "agent takes an externally-produced asset → imports → atlases → wires into a build." That generalizes — swap "AI sprite" for **Figma export / design-system token / API response**. Keep deliberate placeholder art; test whether the agent can *integrate* assets, not generate pretty ones.
+
+### D4. Learning Unity / mobile dev — branches by transferable value
+| Branch | Transfers | Learn |
+|---|---|---|
+| Data-driven design (ScriptableObjects, config-as-data) | ★★★ | the `RulesetDefinition` pattern — separating data from logic is universal |
+| State machines & event systems | ★★★ | menu/pause/game-over flow; cleanest FSM intro |
+| Performance: profiling, GC/alloc, frame budget | ★★★ | mobile forces discipline; profiler skills transfer everywhere |
+| Build/release pipeline (GameCI, signing, Play Console) | ★★ | CI-for-binaries is broadly useful |
+| Object pooling / memory patterns | ★★ | hot-path allocation thinking |
+| Game feel / juice (tweening, particles, haptics, audio) | ★ craft | *Game Feel* (Swink), "juice it or lose it" |
+| Rendering/URP, shaders, animation | ★ | graphics specialty |
+| Input/touch/gesture, responsive UI | ★★ | UI-layout thinking transfers |
+
+**Strongest move:** do **M0→M2 by hand once, no agent.** Internalizing the engine loop + why agents fail where they do makes you a far better agent-operator. Then use the agent to go fast.
+
+### D5. Building a better stack (ranked by leverage, from observed failures)
+1. **Verification loop** — Editor-in-the-loop validation, **visual/screenshot feedback** (so the agent can *see* what it built), **LSP/Roslyn** (real compile errors + refs). #1 by far; fixes "wrote plausible code, never checked."
+2. **Grounding** — version-pinned API/tool-schema RAG. Kills the `checkCompilation` / `UNITY_SERIAL` / Unity-2022 hallucination class.
+3. **Observability/tracing** — you cannot compare harnesses without it; the missing piece for the experiment to mean anything.
+4. **Composite, self-verifying tools** over raw file-writing (`create_unity_project` via real Hub, not hand-rolled `ProjectSettings`).
+5. **Callbacks over polling** (GitHub→Discord) + **model routing** (cheap for grunt, strong for hard) for cost.
+
+### D6. Agent guardrails — enforce invariants, not prose
+Every failure here points at one principle: **guardrails must be enforced invariants (code/CI/gates), not prose the agent can ignore.** Priority order:
+- **Pre-flight validation** — schema-check tool calls before they run (would've caught `checkCompilation` + duplicate `buildTarget` before burning a CI run).
+- **Fail-fast gates** — "project opens & compiles," "right Unity version," "CI green to merge" as enforced checks (the Unity-2022 + over-claiming bugs were prose-not-gate).
+- **Artifact-required "done"** — no claim without evidence; tests that *fail if the agent re-stubs* (cf. the BotPlayer correction prompt).
+- **Independent verification** — QA + Staff-Engineer gates; ideally a *different model* verifies than builds (correlated blind spots otherwise).
+- **Budget/loop breakers** — token/time caps; "N retries → stop & escalate" (stops CI thrashing).
+- **Destructive-op blocks + sandboxing** — deny `rm -rf`/force-push/secret-printing; per-run repos + worktrees.
+- **Observability as a guardrail** — trace everything so you can audit/replay *why*.
+
+### D7. The transferable payoff (the actual point)
+The Unity game is disposable. What **transfers to deploying agents at a corp** is the spine: **verification discipline, enforced guardrails, observability, honest "done" criteria, and the judgment to separate tooling-immaturity from model-capability.** AI-art and shader depth are *not* on that path; guardrails and verification are.
+
+---
+
+## E. Open threads — raw notes (to expand)
+
 
 
 Remove ambiguity ask agent to interview you
